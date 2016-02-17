@@ -1,6 +1,6 @@
 // 2.13.16
 //
-// Randomized greedy filling of an arbitrary convex polygon with circles 
+// Randomized greedy filling of an arbitrary polygon with circles 
 //  
 // Uses a fast, elegant elgorithm to test whether 
 // a point is inside a polygon As explained here:
