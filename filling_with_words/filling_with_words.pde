@@ -69,7 +69,7 @@ void addWord() {
   PVector p = new PVector(random(0, width), random(0, height));
   while (insideBoundingBoxes(p)) { p = new PVector(random(0, width), random(0, height)); }
   
-  // constrain width and height based on existing bounding 
+  // constrain width and height based on existing bounding boxes
   float ratio = random(min_ratio, max_ratio);
   float rWidth = min(max_width, width - p.x);
   float rHeight = min(rWidth / ratio, height - p.y);
