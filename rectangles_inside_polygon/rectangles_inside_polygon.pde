@@ -17,31 +17,57 @@ void setup() {
   poly.addDefaultVertices();
   poly.computeBoundingBox();
   poly.printInfo();
+  
+  poly.draw();
 }
 
 void draw() {
-  poly.draw();
+  
   if (count < max_count) {
-    PVector p = pickPoint(poly);
-    PVector dim_rect = constraintsFromPolygon(p, poly);
-    rect(p.x, p.y, dim_rect.x, dim_rect.y);
-    count++;
+   PVector p = pickPoint(poly);
+   PVector dim_rect = constraintsFromPolygon(p, poly);
+   rect(p.x, p.y, dim_rect.x, dim_rect.y);
+   count++;
   }
 }
 
-
-
 void mousePressed() {
   // println(mouseX + ", " + mouseY);
-  PVector p = new PVector(mouseX, mouseY);
+  PVector p = new PVector(mouseX, mouseY); 
   PVector dim_rect = constraintsFromPolygon(p, poly);
-  rect(p.x, p.y, dim_rect.x, dim_rect.y);
+  Rectangle r = new Rectangle(p.x, p.y, dim_rect.x, dim_rect.y); 
+  r.draw();
 }
 
 PVector pickPoint(Polygon poly) {
   PVector p = poly.getRandomPointInBoundingBox();
   while (!poly.contains(p))
   p = poly.getRandomPointInBoundingBox();
+  
+  float crossing_dist_h = -1;
+  int crossing_index_h = -1;
+  for (int i = 0; i < poly.segments.length; i++) {
+    Segment s = poly.segments[i];
+    float current_crossing_h = Utils.crossingDistanceHorizontal(p, s);
+    
+    if ((current_crossing_h < 0) && (current_crossing_h != -1)) {
+      if (crossing_dist_h == -1) {
+        crossing_dist_h = current_crossing_h;
+        crossing_index_h = i;
+      }
+      else if (current_crossing_h > crossing_dist_h) {
+        crossing_dist_h = current_crossing_h;
+        crossing_index_h = i;
+      }
+    }
+  }
+  if (crossing_index_h != -1) {
+    Segment s = poly.segments[crossing_index_h];
+    if (s.tiltRight()) {
+      p.x = p.x + crossing_dist_h;
+    }
+  }
+  
   return p;
 }
 
@@ -55,7 +81,7 @@ PVector constraintsFromPolygon(PVector p, Polygon poly) {
     float current_crossing_h = Utils.crossingDistanceHorizontal(p, s);
     float current_crossing_v = Utils.crossingDistanceVertical(p, s);
 
-    if (current_crossing_h > 0) {
+    if (current_crossing_h > 0.001) {
       if (crossing_dist_h <= 0) {
         crossing_dist_h = current_crossing_h;
         crossing_index_h = i;
@@ -65,7 +91,7 @@ PVector constraintsFromPolygon(PVector p, Polygon poly) {
       }
     }
 
-    if (current_crossing_v > 0) {
+    if (current_crossing_v > 0.001) {
       if (crossing_dist_v <= 0) {
         crossing_dist_v = current_crossing_v;
       } else if (current_crossing_v < crossing_dist_v) {
@@ -99,7 +125,7 @@ PVector constraintsFromPolygon(PVector p, Polygon poly) {
           else crossing_dist_v_tr = min(current_crossing_v, crossing_dist_v_tr);
         }
       }
-      if (crossing_dist_v_tr > 0) {
+      if (crossing_dist_v_tr > 0.001) {
         dim_rect.y = min(crossing_dist_v, crossing_dist_v_tr);
       }
     }
