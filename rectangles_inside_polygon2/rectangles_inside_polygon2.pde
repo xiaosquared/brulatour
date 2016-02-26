@@ -114,7 +114,7 @@ void addRectangleTL(PVector tl) {
   
   float n = random(min_ratio, max_ratio); // ratio
   
-  // Constrain based on edge of polygon 
+  // Constrain based on right edges of polygon
   CardinalConstraints ctl = getCardinalConstraints(tl, poly);
   if (ctl.east.i >= 0 && ctl.east.val > 0) {
     Segment sEast = poly.segments[ctl.east.i];
@@ -144,6 +144,26 @@ void addRectangleTL(PVector tl) {
       if (ctr.south.val > 0) {
         r_height = min(r_height, min(y_dist, ctr.south.val));
       }
+    } 
+  }
+  
+  // Constraints based on bottom edges of polygon
+  if (ctl.south.i >= 0 && ctl.south.val > 0) {
+    r_height = min(r_height, ctl.south.val);
+    Segment s = poly.segments[ctl.south.i];
+    Rectangle r = new Rectangle(tl.x, tl.y, r_width, r_height);
+    if (r.contains(s.a)) {
+      r_height = s.a.y - tl.y;
+    }
+  }
+  PVector tr = new PVector(tl.x + r_width, tl.y);
+    CardinalConstraints ctr = getCardinalConstraints(tr, poly);
+  if (ctr.south.i >= 0 && ctr.south.val > 0) {
+     r_height = min(r_height, ctr.south.val);
+     Segment s = poly.segments[ctl.south.i];
+     Rectangle r = new Rectangle(tl.x, tl.y, r_width, r_height);
+     if (r.contains(s.b)) {
+      r_height = s.b.y - tl.y;
     }  
   }
   
@@ -155,7 +175,7 @@ void addRectangleTL(PVector tl) {
   if (r_height < r_width/max_ratio)
     r_width = r_height * max_ratio;
   
-  
+  // TODO: final check that rectangle doesn't contain any of the points of the polygon
   
   Rectangle r = new Rectangle(tl.x, tl.y, r_width, r_height);
   rects.add(r);
