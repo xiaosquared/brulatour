@@ -160,7 +160,7 @@ void addRectangleTL(PVector tl) {
     CardinalConstraints ctr = getCardinalConstraints(tr, poly);
   if (ctr.south.i >= 0 && ctr.south.val > 0) {
      r_height = min(r_height, ctr.south.val);
-     Segment s = poly.segments[ctl.south.i];
+     Segment s = poly.segments[ctr.south.i];
      Rectangle r = new Rectangle(tl.x, tl.y, r_width, r_height);
      if (r.contains(s.b)) {
       r_height = s.b.y - tl.y;

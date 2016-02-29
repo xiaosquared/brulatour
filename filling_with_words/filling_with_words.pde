@@ -9,7 +9,7 @@
 // and is still fast. 800 starts slowing down. 900 takes a few seconds.
 
 //String phrase = "We do not grow absolutely chronologically\n We grow sometimes in one dimension and not in another\n unevenly\n We grow partially\n We are relative\n We are mature in one realm childish in another\n The past present and future mingle and pull us backward forward or fix us in the present\n We are made up of layers cells constellations";
-String phrase = "Vieux carré\nMardi Gras\nMississippi River\nLake Pontchartrain\nWar of 1812\nSt. Louis Cathedral\nCarondolet Canal\nsugar\ntobacco\ncottonplantation\nCongo Square\nbamboula\nTreme\nMarigny\nlevee\ncypressStoryville\nLouis Armstrong\nJelly-Roll Morton\nCreole\nBayou St. John\nJean Lafitte\nFrench Market\nUptown\nDowntown\nhurricane\nslavery\nReconstruction\nantibellum";
+String phrase = "Vieux carré\nMardi Gras\nMississippi River\nLake Pontchartrain\nWar of 1812\nSt. Louis Cathedral\nCarondolet Canal\nsugar\ntobacco\ncotton\nplantation\nCongo Square\nbamboula\nTreme\nMarigny\nlevee\ncypressStoryville\nLouis Armstrong\nJelly-Roll Morton\nCreole\nBayou St. John\nJean Lafitte\nFrench Market\nUptown\nDowntown\nhurricane\nslavery\nReconstruction\nantibellum";
 WordSet words;
 
 PFont font;

@@ -19,7 +19,7 @@ class WordSet {
   }
   
   // draws word at index "i", scales it to the specified width, returns bounding rectangle
-  Rectangle drawWord(int i, float x, float y, float specified_width) {
+  void drawWord(int i, float x, float y, float specified_width) {
     String word = words.get(i);
     float specified_height = specified_width / widths[i] * 20;
     
@@ -27,9 +27,13 @@ class WordSet {
     text(word, x, y - (specified_height * 0.1));
     
     // bounding rectangle
-    Rectangle r = new Rectangle(x, y, specified_width, specified_height);
+    //Rectangle r = new Rectangle(x, y, specified_width, specified_height);
     //r.draw();
-    return r;
+    //return r;
+  }
+  
+  float getSpecifiedHeight(int i, float specified_width) {
+    return specified_width / widths[i] * 20;
   }
   
   void computeWidths() {
