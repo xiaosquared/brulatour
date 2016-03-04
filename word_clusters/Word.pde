@@ -7,12 +7,16 @@ class Word {
   float fontHeight;
   float fontWidth;
   
+  Rectangle boundingBox;
+  
   Word(int i, float s, PVector p) {
     wordIndex = i;
     fontHeight = s;
     fontWidth = ws.getWidthFromHeight(i, fontHeight);
     position = p;
     velocity = new PVector(random(-2, 2), random(-2, 2));
+    
+    boundingBox = new Rectangle(position.x, position.y, fontWidth, fontHeight);
   }
   
   Word(int i) {
@@ -25,6 +29,10 @@ class Word {
       velocity.x = -velocity.x;
     if (position.y <=0 || position.y + fontHeight > height)
       velocity.y = -velocity.y;
+  }
+  
+  boolean boxContains(PVector p) {
+    return boundingBox.contains(p);
   }
   
   void draw() {

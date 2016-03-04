@@ -143,7 +143,7 @@ class Polygon {
   }
   
   int unselectVertex() {
-    computeBoundingBox(); 
+    computeBoundingBox();
     int old_vertex = selected_vertex; 
     selected_vertex = -1;
     return old_vertex;
@@ -160,6 +160,18 @@ class Polygon {
      addVertex(new PVector(269, 550));
      addVertex(new PVector(26, 458));
      addVertex(new PVector(86, 232));
+  }
+  
+  void addDefaultVertices2() {
+    addVertex(new PVector(161, 93));
+     addVertex(new PVector(256, 192));
+     addVertex(new PVector(442, 189));
+     addVertex(new PVector(486, 47));
+     addVertex(new PVector(648, 247));
+     addVertex(new PVector(656, 455));
+     addVertex(new PVector(369, 550));
+     addVertex(new PVector(126, 458));
+     addVertex(new PVector(186, 232));
   }
   
   void printInfo() {

@@ -11,16 +11,27 @@ class Polygon {
   float vertex_radius = 10;
   int selected_vertex = -1;
 
+  boolean inProgress = true;
+
+  Polygon(boolean inProgress) {
+    this();
+    this.inProgress = inProgress;
+  }
+
   Polygon() {
     vertices_temp = new ArrayList<PVector>();
     num_vertices = 0;
     min_x = 0; min_y = 0; max_x = 0; max_y = 0;
   }
   
-  void computeBoundingBox() {
+  void complete() {
     computeVerticesArray();
     computeSegmentsArray();
-    
+    computeBoundingBox();
+    this.inProgress = false;
+  }
+  
+  void computeBoundingBox() {
     min_x = width; min_y = height; max_x = 0; max_y = 0;
     for (int i = 0; i < num_vertices; i++) {
       min_x = min(vertices[i].x, min_x);
@@ -100,6 +111,11 @@ class Polygon {
   }
 
   void draw(boolean drawSegments, boolean drawVertices) {
+    if (inProgress) {
+      drawVerticesTemp();
+      return;
+    }
+    
     for (int i = 0; i < num_vertices; i++) {
       if (drawSegments)
         drawSegment(i);
@@ -124,6 +140,12 @@ class Polygon {
     ellipse(p.x, p.y, vertex_radius, vertex_radius);
   }
   
+  void drawVerticesTemp() {
+    for (PVector p : vertices_temp) {
+      ellipse(p.x, p.y, vertex_radius, vertex_radius);
+    }
+  }
+  
   int selectVertex(int x, int y) {
     for (int i = 0; i < num_vertices; i++) {
       if (dist(x, y, vertices[i].x, vertices[i].y) < vertex_radius) {
@@ -143,25 +165,12 @@ class Polygon {
   }
   
   int unselectVertex() {
-    computeBoundingBox(); 
+    computeBoundingBox();
     int old_vertex = selected_vertex; 
     selected_vertex = -1;
     return old_vertex;
   }
-  
-  // for debugging, keep a default polygon around
-  void addDefaultVertices() {
-     addVertex(new PVector(61, 93));
-     addVertex(new PVector(156, 192));
-     addVertex(new PVector(342, 189));
-     addVertex(new PVector(386, 47));
-     addVertex(new PVector(548, 247));
-     addVertex(new PVector(556, 455));
-     addVertex(new PVector(269, 550));
-     addVertex(new PVector(26, 458));
-     addVertex(new PVector(86, 232));
-  }
-  
+
   void printInfo() {
     println("No. Vertices: " + num_vertices);
     for (int i = 0; i < num_vertices; i++) {

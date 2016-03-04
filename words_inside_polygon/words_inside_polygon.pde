@@ -19,7 +19,7 @@ float min_height = 7;
 float min_width = min_height * min_ratio;
 float max_width = 130;
 
-float x_shift_thresh = 50;
+float x_shift_thresh = 70;
 float y_shift_thresh = 10;
 float e = 0.1;
 
@@ -149,7 +149,6 @@ void addRectangle(PVector tl, Polygon poly, ArrayList<Rectangle> rectangles) {
   float current_ratio = dimensions.x / dimensions.y;
   int index = words.pickWord(current_ratio);
   dimensions.x = dimensions.y * words.ratios[index];
-  words.getSpecifiedHeight(index, dimensions.x);
   
   // Bounding box of word
   Rectangle box = new Rectangle(tl.x, tl.y, dimensions.x, dimensions.y);
