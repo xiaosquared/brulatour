@@ -12,6 +12,8 @@ class Polygon {
   int selected_vertex = -1;
 
   boolean inProgress = false;
+  
+  color c = color(200);
 
   Polygon(boolean inProgress) {
     this();
@@ -103,6 +105,8 @@ class Polygon {
     return new PVector(random(min_x, max_x), random(min_y, max_y));
   }
   
+  void setColor(color c) { this.c = c; }
+  
   void draw() { draw(true, false); }
   
   void draw(boolean drawVertices) {
@@ -116,6 +120,7 @@ class Polygon {
       return;
     }
     
+    stroke(c);
     for (int i = 0; i < num_vertices; i++) {
       if (drawSegments)
         drawSegment(i);

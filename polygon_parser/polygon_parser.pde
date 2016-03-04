@@ -2,12 +2,17 @@
 //
 // Polygon Parser
 //
-// Reads a file and constructs polygons  
+// Reads a JSON file and constructs polygons based on specified points  
 //
 
-String filename = "test.json";
+String filename = "polygons.json";
 JSONArray values;
 ArrayList<Polygon> polygons;
+Polygon selectedPoly;
+boolean drawPolygons = true;
+
+color selectedColor = color(127, 255, 255);
+color normalColor = color(200);
 
 void setup() {
   size(800, 800);
@@ -16,12 +21,36 @@ void setup() {
   
   polygons = new ArrayList<Polygon>();
   polygonsFromJSON();
-  noLoop();
+  
 }
 
 void draw() {
+  background(50);
+  if (drawPolygons) {
+    for (Polygon poly : polygons) {
+      poly.draw();
+    }
+  }
+}
+
+void mousePressed() {
+  if (selectedPoly != null) {
+    selectedPoly.setColor(normalColor);
+    selectedPoly = null;
+  }
+  
   for (Polygon poly : polygons) {
-    poly.draw();
+    if (poly.contains(mouseX, mouseY)) {
+      selectedPoly = poly;
+      selectedPoly.setColor(selectedColor);
+    }
+  }
+  
+}
+
+void keyPressed() {
+  if (key == 'p') {
+    drawPolygons = !drawPolygons;
   }
 }
 

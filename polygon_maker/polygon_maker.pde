@@ -11,8 +11,6 @@ PImage house;
 Polygon polyTemp;
 ArrayList<Polygon> polys;
 
-JSONObject json;
-
 void setup() {
   size(800, 800);
   noFill();
@@ -20,11 +18,6 @@ void setup() {
   
   polyTemp = new Polygon(true);
   polys = new ArrayList<Polygon>();
-  
-  json = new JSONObject();
-  json.setInt("id", 0);
-  json.setString("name", "xx");
-  saveJSONObject(json, "data/polygons.json");
 }
 
 void draw() {
@@ -40,13 +33,21 @@ void draw() {
 
 void saveJSON() {
   JSONArray values = new JSONArray();
-  for (Polygon poly : polys) {
-    for (int i = 0; i < poly.vertices.length; i++) {
+  for (int i = 0; i < polys.size(); i++) {
+    Polygon poly = polys.get(i);
+    JSONArray jpoly = new JSONArray();
+    
+    for (int j = 0; j < poly.vertices.length; j++) {
       JSONArray jvertex = new JSONArray();
-      jvertex.setInt(0, (int) poly.vertices[i].x);
-      jvertex.setInt(1, (int) poly.vertices[i].x);
+      jvertex.setInt(0, (int) poly.vertices[j].x);
+      jvertex.setInt(1, (int) poly.vertices[j].y);
+      jpoly.setJSONArray(j, jvertex);
     }
+    
+    values.setJSONArray(i, jpoly);
   }
+  println(values);
+  saveJSONArray(values, "data/polygons.json");
 }
 
 void mousePressed() {
@@ -63,5 +64,8 @@ void keyPressed() {
   else if (keyCode == 10) {
     polyTemp.complete();
     polys.add(polyTemp);
+  } 
+  else if (keyCode == 32) {
+    saveJSON();
   }
 }
