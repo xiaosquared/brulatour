@@ -20,7 +20,6 @@ class Polygon {
   void computeBoundingBox() {
     computeVerticesArray();
     computeSegmentsArray();
-    
     min_x = width; min_y = height; max_x = 0; max_y = 0;
     for (int i = 0; i < num_vertices; i++) {
       min_x = min(vertices[i].x, min_x);

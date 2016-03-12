@@ -6,8 +6,6 @@
 // Treats individual words as particles. Figures out font-sized based on width constraint
 // Simple demo renders and bunch of words with random positions & velocities.
 //
-// TODO: 
-// - Base polygons off French Quarter houses
 
 import java.util.*;
 

@@ -3,7 +3,7 @@
 // Polygon Parser
 //
 // Reads a JSON file and constructs polygons based on specified points  
-//
+// Enables us to select diff polygons
 
 String filename = "polygons.json";
 JSONArray values;
@@ -45,8 +45,9 @@ void mousePressed() {
       selectedPoly.setColor(selectedColor);
     }
   }
-  
 }
+
+
 
 void keyPressed() {
   if (key == 'p') {

@@ -3,8 +3,9 @@
 // Polygon Maker
 //
 // A tool to help us create polygons by tracing an image
-// Also enables us to select diff polygons
 // TODO: rectangular sized holes in polygons!
+//
+// NOTE: Apparently, polygons must be defined clockwise
 
 PImage house;
 
