@@ -42,7 +42,7 @@ void draw() {
 
 void keyPressed() {
   if (key == 32) {
-    
+    bAnimate = !bAnimate;  
   }
 }
 

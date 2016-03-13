@@ -29,6 +29,7 @@ class Word {
     fontHeight = h;
     position = p;
     velocity = new PVector(random(-2, 2), random(-2, 2));
+    acceleration = new PVector(0, 0);
     
     boundingBox = new Rectangle(position.x, position.y, fontWidth, fontHeight);
   }
@@ -38,6 +39,7 @@ class Word {
   }
   
   void update() {
+    velocity.add(acceleration);
     position.add(velocity);
     if (position.x <= 0 || position.x + fontWidth > width)
       velocity.x = -velocity.x;

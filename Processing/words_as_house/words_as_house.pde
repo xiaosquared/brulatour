@@ -1,4 +1,4 @@
-// Created 3.4.16, updated 3.11.16
+// Created 3.4.16, last update 3.12.16
 //
 // Words As House
 //
@@ -9,8 +9,10 @@
 
 import java.util.*;
 
-String filename = "bourbon3.json";
 JSONArray values;
+String filename = "bourbon2";
+String inputFilename = filename + ".json";
+String outputFilename = filename + "-words.json";
 
 int defaultFontSize = 20;
 int totalWords = 50;
@@ -20,10 +22,10 @@ ArrayList<WordCluster> wordClusters;
 WordCluster selectedCluster;
 
 color selectedColor = color(127, 255, 255);
-color normalColor = color(100);
-color dark = color(20);
-color light = color(200);
-color medium = color(100);
+color normalColor = 100;
+color dark = 20;
+color light = 200;
+color medium = 100;
 int bkg = 50;
 
 PFont font;
@@ -32,11 +34,8 @@ void setup() {
   size(1500, 1000);
   noFill();
   stroke(200);
-  textAlign(LEFT, TOP);
-  background(50);
   
   ws = new WordSet(defaultFontSize);
-
   font = createFont("American Typewriter", 60);
   textFont(font, defaultFontSize);
   textAlign(LEFT, TOP);
@@ -75,6 +74,9 @@ void mouseReleased() {
 }
 
 void keyPressed() {
+  if (key == 10) {
+    makeWordsJSON();
+  }
   if (key == 'p') {
     for (WordCluster wc : wordClusters) {
       wc.drawPoly = !wc.drawPoly;
@@ -110,7 +112,7 @@ void keyPressed() {
 }
 
 void polygonsFromJSON() {
-  values = loadJSONArray(filename);
+  values = loadJSONArray(inputFilename);
   for (int i = 0; i < values.size(); i++) {
     JSONArray jpoly = values.getJSONArray(i);
     Polygon poly = new Polygon();
@@ -128,10 +130,27 @@ void polygonsFromJSON() {
 }
 
 void makeWordsJSON() {
-  JSONArray clustersJSON = new JSONArray();
+  JSONArray clustersArrayJSON = new JSONArray();
   for (int i = 0; i < wordClusters.size(); i++) {
-     JSONObject cluster = new JSONObject();
-     int color = 1;
-     
+    WordCluster wc = wordClusters.get(i);  
+    
+    JSONObject clusterJSON = new JSONObject();
+    clusterJSON.setInt("color", wc.c);
+    
+    JSONArray wordsArrayJSON = new JSONArray();
+    for (int j = 0; j < wc.words.size(); j++) {
+      Word w = wc.words.get(j);
+      JSONObject wordJSON = new JSONObject();
+      wordJSON.setInt("index", w.wordIndex);
+      wordJSON.setFloat("x", w.position.x);
+      wordJSON.setFloat("y", w.position.y);
+      wordJSON.setFloat("width", w.fontWidth);
+      wordJSON.setFloat("height", w.fontHeight);
+      wordsArrayJSON.setJSONObject(j, wordJSON);
+    }
+    clusterJSON.setJSONArray("words", wordsArrayJSON);
+    clustersArrayJSON.setJSONObject(i, clusterJSON); 
   }
+  println(clustersArrayJSON);
+  saveJSONArray(clustersArrayJSON, "data/" + outputFilename);
 }
