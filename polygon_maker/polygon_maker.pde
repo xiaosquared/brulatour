@@ -12,10 +12,14 @@ PImage house;
 Polygon polyTemp;
 ArrayList<Polygon> polys;
 
+String filename = "bourbon3";
+
 void setup() {
-  size(800, 800);
+  size(1500, 1000);
   noFill();
-  house = loadImage("house.jpg");
+  stroke(127, 255, 255);
+  
+  house = loadImage(filename + ".jpg");
   
   polyTemp = new Polygon(true);
   polys = new ArrayList<Polygon>();
@@ -48,7 +52,7 @@ void saveJSON() {
     values.setJSONArray(i, jpoly);
   }
   println(values);
-  saveJSONArray(values, "data/polygons.json");
+  saveJSONArray(values, "data/" + filename + ".json");
 }
 
 void mousePressed() {

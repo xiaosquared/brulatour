@@ -9,7 +9,7 @@
 
 import java.util.*;
 
-String filename = "polygons.json";
+String filename = "bourbon3.json";
 JSONArray values;
 
 int defaultFontSize = 20;
@@ -24,12 +24,12 @@ color normalColor = color(100);
 color dark = color(20);
 color light = color(200);
 color medium = color(100);
-
+int bkg = 50;
 
 PFont font;
 
 void setup() {
-  size(800, 800);
+  size(1500, 1000);
   noFill();
   stroke(200);
   textAlign(LEFT, TOP);
@@ -46,7 +46,7 @@ void setup() {
 }
 
 void draw() {
-  background(255);
+  background(bkg);
   
   for (WordCluster wc : wordClusters) {
     wc.draw();
@@ -54,14 +54,12 @@ void draw() {
 }
 
 void mousePressed() {
-  if (selectedCluster != null) {
-    selectedCluster.setColor(normalColor);
+  if (selectedCluster != null) {    
     selectedCluster = null;
   }
   
   for (WordCluster wc : wordClusters) {
     if (wc.poly.contains(mouseX, mouseY)) {
-      println("hi");
       selectedCluster = wc;
       wc.setColor(selectedColor);
     }
@@ -81,7 +79,16 @@ void keyPressed() {
     for (WordCluster wc : wordClusters) {
       wc.drawPoly = !wc.drawPoly;
     }
-  } else if (selectedCluster != null) {
+  }  
+  else if (key == 'b') {
+    if (bkg == 50) {
+      bkg = 240;
+    } else {
+      bkg = 50;
+    }
+  }
+  
+  else if (selectedCluster != null) {
     switch(key) {
       case 32:
         selectedCluster.populateInsidePolygon(50);
@@ -117,5 +124,14 @@ void polygonsFromJSON() {
     
     poly.computeBoundingBox();
     wordClusters.add(new WordCluster(poly));
+  }
+}
+
+void makeWordsJSON() {
+  JSONArray clustersJSON = new JSONArray();
+  for (int i = 0; i < wordClusters.size(); i++) {
+     JSONObject cluster = new JSONObject();
+     int color = 1;
+     
   }
 }

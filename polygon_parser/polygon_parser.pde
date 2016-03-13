@@ -5,7 +5,7 @@
 // Reads a JSON file and constructs polygons based on specified points  
 // Enables us to select diff polygons
 
-String filename = "polygons.json";
+String filename = "polygons2.json";
 JSONArray values;
 ArrayList<Polygon> polygons;
 Polygon selectedPoly;

@@ -1,6 +1,6 @@
 class WordCluster {
   ArrayList<Word> words;
-  color c = color(200);
+  int c = 200;
   Polygon poly;
   boolean drawPoly = true;
   
@@ -19,7 +19,7 @@ class WordCluster {
     this.poly = poly;
   }
   
-  void setColor(color c) { this.c = c; }
+  void setColor(int c) { this.c = c; }
   
   void draw() {
     fill(c);
@@ -34,7 +34,7 @@ class WordCluster {
     if (drawPoly) {
       noFill();
       stroke(c);
-      poly.draw(true, true);
+      poly.draw(true, false);
     }
   }
 
