@@ -4,6 +4,7 @@
 //
 // Draws word clusters from JSON files
 // Simplified WordCluster code by taking out anything Polygon-related
+// Space bar for simple animation
 
 import java.util.*;
 
