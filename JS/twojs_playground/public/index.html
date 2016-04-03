@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Two.js Example</title>
+  <style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #333333;
+		}
+	</style>
+  <script src="js/two.min.js"></script>
+</head>
+
+
+<body>
+<div id="drawing"></div>
+
+<script>
+
+// very basic example of drawing shapes in Two.js
+
+var elem = document.getElementById('drawing');
+var two = new Two({ fullscreen: true }).appendTo(elem);
+
+var circle = two.makeCircle(-70, 0, 50);
+var rect = two.makeRectangle(70, 0, 100, 100);
+circle.fill = '#FF8000';
+rect.fill = 'rgba(0, 200, 255, 0.75)';
+
+var textstyle = {family:"American Typewriter", size:36, fill:'#ffffff'}
+var text = new Two.Text("hello world", 0, 0, textstyle);
+
+var group = two.makeGroup(circle, rect, text);
+group.translation.set(two.width / 2, two.height / 2);
+group.scale = 1;
+group.noStroke();
+
+two.update();
+
+function update(timestamp) {
+  console.log("test");
+  group.scale +=0.01;
+  if (group.scale > 7)
+    group.scale = 1;
+  two.update();
+  requestAnimationFrame(update);
+}
+requestAnimationFrame(update);
+
+</script>
+</body>
+
+</html>

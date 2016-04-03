@@ -28,7 +28,7 @@ class Word {
     fontWidth = w;
     fontHeight = h;
     position = p;
-    velocity = new PVector(random(-2, 2), random(-2, 2));
+    velocity = new PVector(random(-20, 20), random(-20, 20));
     acceleration = new PVector(0, 0);
     
     boundingBox = new Rectangle(position.x, position.y, fontWidth, fontHeight);
