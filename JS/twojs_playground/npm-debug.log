@@ -14,7 +14,7 @@
 5 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:317:48
 5 verbose stack     at evalmachine.<anonymous>:263:20
 5 verbose stack     at OpenReq.Req.done (/usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:141:5)
-6 verbose cwd /Users/xx/git_repos/brulatour/JS/word_test
+6 verbose cwd /Users/xx/git_repos/brulatour/JS/twojs_playground
 7 error Darwin 14.5.0
 8 error argv "node" "/usr/local/bin/npm" "start"
 9 error node v0.12.2
