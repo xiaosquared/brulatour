@@ -60,7 +60,7 @@ function Word(i, x, y, w, h, c) {
   this.fontSize = h;
 
   this.p = {x: x + w/2, y:  y-200 + h/2};
-  this.v = {x: Math.random(-20, 20), y: Math.random(-20, 20)};
+  this.v = {x: Math.random(-50, 50), y: Math.random(-50, 50)};
 
   this.color = c.toString(16);
   this.color = '#' + this.color+this.color+this.color;
@@ -70,9 +70,9 @@ function Word(i, x, y, w, h, c) {
   this.text.translation.set(this.p.x, this.p.y);
 
   this.update = function() {
-    //this.p.x = this.p.x + this.v.x;
-    //this.p.y = this.p.y + this.v.y;
-    //this.text.translation.set(this.p.x, this.p.y);
+    this.p.x = this.p.x + this.v.x;
+    this.p.y = this.p.y + this.v.y;
+    this.text.translation.set(this.p.x, this.p.y);
   }
 
   this.print = function() {

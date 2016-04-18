@@ -13,6 +13,11 @@ app.get('/', function (req, res) {
   res.sendFile(staticRoot+"index.html");
 });
 
+app.get('/p', function (req, res) {
+  res.sendFile(staticRoot+"parse_clusters.html");
+});
+
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
