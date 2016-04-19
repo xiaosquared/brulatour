@@ -1,5 +1,5 @@
-// 4.19.16
-// Uses Pixi to render words
+// 4.3.16
+// Uses Two.js to render words
 
 var wordSet = (function() {
   var ws = {};
@@ -62,24 +62,24 @@ function Word(i, x, y, w, h, c) {
   this.i = i;
   this.fontSize = h;
 
-  var myFont = h+"px "+"Georgia";
-  this.text = new PIXI.Text(wordSet.getWord(i), {font: myFont, fill:'#fff'});
-  this.text.x = x;
-  this.text.y = y;
-
+  this.p = {x: x + w/2, y:  y-200 + h/2};
   this.v = {x: Math.random(-50, 50), y: Math.random(-50, 50)};
 
+  this.color = c.toString(16);
+  this.color = '#' + this.color+this.color+this.color;
+
+  this.style = {family:"American Typewriter", size:this.fontSize, fill:this.color};
+  this.text = two.makeText(wordSet.getWord(this.i), 0, 0, this.style);
+  this.text.translation.set(this.p.x, this.p.y);
+
   this.update = function() {
-    this.text.x = this.text.x + this.v.x;
-    this.text.y = this.text.y + this.v.y;
+    this.p.x = this.p.x + this.v.x;
+    this.p.y = this.p.y + this.v.y;
+    this.text.translation.set(this.p.x, this.p.y);
   }
 
   this.print = function() {
     console.log("Word at " + x + ", " + y);
-  }
-
-  this.makeFontString = function(size, font) {
-    return size+"px "+font;
   }
 }
 

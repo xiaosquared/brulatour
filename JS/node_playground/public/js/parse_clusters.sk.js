@@ -1,3 +1,10 @@
+// 4.3.16
+//
+// Parse Cluster JS
+//
+// Ported JSON parsing code from Processing to JS
+// Uses P5 library for JSON. Tried Two.js for drawing but it was too slow.
+
 var wordsJSON;
 var wordClusters;
 
