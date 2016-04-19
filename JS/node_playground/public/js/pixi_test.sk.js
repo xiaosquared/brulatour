@@ -3,7 +3,7 @@
 // Pixi Particles Test
 //
 // Used Pixi to render 5000 words and have them randomly fly around
-// Speed is OK!
+// Speed is OK! 10000 words at 20fps, 5000 at 40fps
 //
 // Need to figure out how to load American Typewriter as a font
 
@@ -15,6 +15,9 @@ var bMove = true;
 var pixiWidth = window.innerWidth;
 var pixiHeight = window.innerHeight;
 
+var stats = new Stats();
+stats.showPanel(0);
+document.body.appendChild(stats.dom);
 
 function setup() {
   wordSet.init();
@@ -22,6 +25,7 @@ function setup() {
   // setup the renderer
   renderer = PIXI.autoDetectRenderer(pixiWidth, pixiHeight,{backgroundColor : 0xcccccc});
   document.body.appendChild(renderer.view);
+
 
   // create the stage & ParticleContainer
   stage = new PIXI.Container();
@@ -40,12 +44,14 @@ function setup() {
 function animate() {
   requestAnimationFrame(animate);
 
+  stats.begin();
   if (bMove) {
     for (var i = 0; i < words.length; i++) {
       words[i].update();
     }
     renderer.render(stage);
   }
+  stats.end();
 }
 
 window.addEventListener('keydown', function(e) {
