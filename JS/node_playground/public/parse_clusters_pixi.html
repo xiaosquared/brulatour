@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>Web Font Sample</title>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/webfont/1.3.0/webfont.min.js"></script>
+  <script>
+    WebFont.load({
+      custom: {
+        families: ['American Typewriter']
+      }
+    });
+  </script>
+
+  <style type="text/css">
+    @font-face {
+      font-family: "American Typewriter";
+      src: url("../assets/american-typewriter.ttf") format("ttf");
+    }
+    body {
+      background-color: black;
+    }
+
+  </style>
+
+  <script src="js/lib/pixi.min.js"></script>
+  <script src="js/lib/p5.min.js"></script>
+  <script src="js/lib/stats.min.js"></script>
+  <script src="js/words.js"></script>
+  </head>
+<body>
+  <script src="js/parse_clusters_pixi.sk.js"></script>
+</body>
+</html>

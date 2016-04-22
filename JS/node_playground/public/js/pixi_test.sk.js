@@ -33,7 +33,7 @@ function setup() {
   for (var i = 0; i < 5000; i++) {
     var w = new Word(~~(Math.random() * 25),
                     Math.random() * pixiWidth,
-                    Math.random() * pixiHeight, 20, 2);
+                    Math.random() * pixiHeight, 20, 10);
     stage.addChild(w.text);
     words.push(w);
   }

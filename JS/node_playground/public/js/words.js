@@ -61,11 +61,24 @@ var wordSet = (function() {
 function Word(i, x, y, w, h, c) {
   this.i = i;
   this.fontSize = h;
+  this.x_offset = 100;
+  this.y_offset = 200;
 
-  var myFont = h+"px "+"Georgia";
-  this.text = new PIXI.Text(wordSet.getWord(i), {font: myFont, fill:'#fff'});
-  this.text.x = x;
-  this.text.y = y;
+  var myFont = h+"px "+"American Typewriter";
+  var color = '#fff';
+  if (c == 20) {
+    color = '#555';
+  }
+  else if (c == 100) {
+    color = '#aaa';
+  }
+  if (c == 200) {
+    color == '#fff';
+  }
+
+  this.text = new PIXI.Text(wordSet.getWord(i), {font: myFont, fill:color});
+  this.text.x = x-this.x_offset;
+  this.text.y = y-this.y_offset;
 
   this.v = {x: Math.random(-50, 50), y: Math.random(-50, 50)};
 
