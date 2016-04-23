@@ -29,7 +29,12 @@ function setup() {
   stage = new PIXI.Container();
 
   wordSet.init();
-  wordClusters = parseJSON(wordsJSON);
+  wordClusters = parseJSON(wordsJSON, doToWord);
+
+  function doToWord(word) {
+    word.translate(-100, -200);
+    word.setVelocity(Math.random(-50, 50), Math.random(-50, 50));
+  }
 }
 
 function draw() {
@@ -44,29 +49,6 @@ function moveWords() {
   for (var i = 0; i < wordClusters.length; i++) {
     wordClusters[i].update();
   }
-}
-
-function parseJSON(json) {
-  var count = 0;
-  parsedClusters = [];
-
-  for (var i = 0; i < json.length; i++) {
-    var wc = json[i];
-    var cluster = new WordCluster();
-
-    for (var j = 0; j < wc.words.length; j++) {
-      var w = wc.words[j];
-      var myWord = new Word(w.index, w.x, w.y, w.width, w.height, wc.color)
-      cluster.addWord(myWord);
-      stage.addChild(myWord.text);
-      count++;
-    }
-    parsedClusters.push(cluster);
-  }
-
-  console.log("how many words: " + count);
-
-  return parsedClusters;
 }
 
 window.addEventListener('keydown', function(e) {

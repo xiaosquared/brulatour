@@ -56,9 +56,7 @@ function draw() {
 }
 
 function moveWords() {
-  for (var i = 0; i < wordClusters.length; i++) {
-    wordClusters[i].update();
-  }
+  wordClusters[toMove].update();
 }
 
 window.addEventListener('keydown', function(e) {
@@ -66,6 +64,16 @@ window.addEventListener('keydown', function(e) {
   switch(e.keyCode) {
     case 32:
       bMoveWords = !bMoveWords;
+    break;
+    case 48:
+    case 49:
+    case 50:
+    case 51:
+    case 52:
+    case 53:
+      toMove = e.keyCode - 48;
+    break;
+    default:
     break;
   }
 });

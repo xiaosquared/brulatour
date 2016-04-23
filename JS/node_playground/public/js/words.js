@@ -58,11 +58,9 @@ var wordSet = (function() {
   return ws;
 })();
 
-function Word(i, x, y, w, h, c) {
+function Word(i, x, y, h, c) {
   this.i = i;
   this.fontSize = h;
-  this.x_offset = 100;
-  this.y_offset = 200;
 
   var myFont = h+"px "+"American Typewriter";
   var color = '#fff';
@@ -72,19 +70,43 @@ function Word(i, x, y, w, h, c) {
   else if (c == 100) {
     color = '#aaa';
   }
-  if (c == 200) {
-    color == '#fff';
-  }
 
   this.text = new PIXI.Text(wordSet.getWord(i), {font: myFont, fill:color});
-  this.text.x = x-this.x_offset;
-  this.text.y = y-this.y_offset;
+  this.text.x = x; this.text.y = y;
 
-  this.v = {x: Math.random(-50, 50), y: Math.random(-50, 50)};
+  this.p_start = {x: this.text.x, y: this.text.y};
+  this.p_end = {x: this.text.x, y: this.text.y};
+  this.v = {x: 0, y: 0};
+  this.a = {x: 0, y: 0};
+
+  this.translate = function(x, y) {
+    this.text.x += x; this.text.y += y;
+    this.p_start.x = this.text.x; this.p_start.y = this.text.y;
+  }
+
+  this.setVelocity = function(x, y) {
+    this.v.x = x; this.v.y = y;
+  }
+
+  this.setDestination = function(x, y) {
+    this.p_end.x = x; this.p_end.y = y;
+  }
 
   this.update = function() {
-    this.text.x = this.text.x + this.v.x;
-    this.text.y = this.text.y + this.v.y;
+    if (this.text.y > this.p_end.y) {
+      this.v.y = 0;
+      this.text.y = this.p_end.y;
+      return;
+    }
+    this.v.x += this.a.x; this.v.y += this.a.y;
+    this.text.x += this.v.x; this.text.y += this.v.y;
+  }
+
+  this.reset = function() {
+    this.text.x = this.p_start.x;
+    this.text.y = this.p_start.y;
+    this.v.x = 0;
+    this.v.y = 0;
   }
 
   this.print = function() {
@@ -107,6 +129,12 @@ function WordCluster() {
 
   this.addWord = function(w) {
     this.words.push(w);
+  }
+
+  this.reset = function() {
+    for (var i = 0; i < this.words.length; i++) {
+      this.words[i].reset();
+    }
   }
 
   this.clearWords = function() {
