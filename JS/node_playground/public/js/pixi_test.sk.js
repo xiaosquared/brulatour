@@ -25,6 +25,10 @@ function setup() {
   // setup the renderer
   renderer = PIXI.autoDetectRenderer(pixiWidth, pixiHeight,{backgroundColor : 0xcccccc});
   document.body.appendChild(renderer.view);
+  renderer.view.style.position = 'absolute';
+  renderer.view.style.left = '50%';
+  renderer.view.style.top = '50%';
+  renderer.view.style.transform = 'translate3d( -50%, -50%, 0 )';
 
 
   // create the stage & ParticleContainer
@@ -33,7 +37,7 @@ function setup() {
   for (var i = 0; i < 5000; i++) {
     var w = new Word(~~(Math.random() * 25),
                     Math.random() * pixiWidth,
-                    Math.random() * pixiHeight, 20, 10);
+                    Math.random() * pixiHeight, 20, 5);
     stage.addChild(w.text);
     words.push(w);
   }

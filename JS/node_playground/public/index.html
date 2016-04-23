@@ -1,54 +1,61 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>Two.js Example</title>
+  <title>Brulatour Experiments</title>
   <style>
 		body {
-			margin: 0;
+			margin-top: 100;
 			padding: 0;
 			background-color: #333333;
+      font-family:sans-serif;
+      color: #f3f3f3;
 		}
+    #title {
+      text-align: center;
+      margin-top: 80px;
+      margin-bottom: 50px;
+    }
+
+    #main {
+      width: 350px;
+      margin-top: 0px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .grid {
+      width: 150;
+      text-align: center;
+      float:left;
+      padding: 5px;
+    }
+    .grid img {
+      max-width:100%
+      margin:1.5em auto;
+      padding-bottom: 5px;
+    }
 	</style>
-  <script src="js/two.min.js"></script>
 </head>
 
-
 <body>
-<div id="drawing"></div>
 
-<script>
+  <div id="title"><h1>Test Sketches JS</h1></div>
 
-// very basic example of drawing shapes in Two.js
+  <div id="main">
+    <div class="grid">
+      <a href="pixi_test.html"><img src="assets/thumbs/pixi_first_test.jpg"></img></a>
+      <br>
+      Pixi Animation Test
+    </div>
 
-var elem = document.getElementById('drawing');
-var two = new Two({ fullscreen: true }).appendTo(elem);
+    <div class="grid">
+      <a href="parse_clusters_pixi.html"><img src="assets/thumbs/pixi_webfont.jpg"></img></a>
+      <br>
+      Pixi House
+    </div>
 
-var circle = two.makeCircle(-70, 0, 50);
-var rect = two.makeRectangle(70, 0, 100, 100);
-circle.fill = '#FF8000';
-rect.fill = 'rgba(0, 200, 255, 0.75)';
-
-var textstyle = {family:"American Typewriter", size:36, fill:'#ffffff'}
-var text = new Two.Text("hello world", 0, 0, textstyle);
-
-var group = two.makeGroup(circle, rect, text);
-group.translation.set(two.width / 2, two.height / 2);
-group.scale = 1;
-group.noStroke();
-
-two.update();
-
-function update(timestamp) {
-  console.log("test");
-  group.scale +=0.01;
-  if (group.scale > 7)
-    group.scale = 1;
-  two.update();
-  requestAnimationFrame(update);
-}
-requestAnimationFrame(update);
-
-</script>
+  </div>
 </body>
+
+
 
 </html>
