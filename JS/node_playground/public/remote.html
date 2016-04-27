@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>Remote</title>
+  <style>
+    input[type="button"] {
+      font-size: 60px;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script>
+    var socket = io();
+
+    var button = document.createElement('input');
+    button.setAttribute('type', 'button');
+    button.setAttribute('name', 'test1');
+    button.setAttribute('value', 'Word 1');
+    button.setAttribute('onclick', 'test(1)');
+    document.body.appendChild(button);
+
+    var button2 = document.createElement('input');
+    button2.setAttribute('type', 'button');
+    button2.setAttribute('name', 'test2');
+    button2.setAttribute('value', 'Word 2');
+    button2.setAttribute('onclick', 'test(2)');
+    document.body.appendChild(button2);
+
+
+    function test(n) {
+      socket.emit('word', n);
+    }
+
+  </script>
+
+</body>
+
+
+</html>

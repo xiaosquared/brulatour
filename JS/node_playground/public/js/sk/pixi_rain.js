@@ -92,7 +92,6 @@ function doToAllWords(f) {
     for (var j = 0; j < wc.words.length; j++) {
       var word = wc.words[j];
       f(word);
-
     }
   }
 }

@@ -48,6 +48,7 @@ var wordSet = (function() {
   }
 
   ws.computeWidths = function() {
+
     textSize(20);
     for (var i = 0; i < ws.numWords; i++) {
        ws.widths[i] = textWidth(ws.words[i]);
@@ -61,9 +62,13 @@ var wordSet = (function() {
 function Word(i, x, y, h, c) {
   this.i = i;
   this.fontSize = h;
+  this.width = h * wordSet.ratios[i];
+  this.getFontString = function(s) {
+    return s+"px "+"American Typewriter";
+  }
 
-  var myFont = h+"px "+"American Typewriter";
-  var color = '#fff';
+  var myFont = this.getFontString(h);
+  this.color = '#fff';
   if (c == 20) {
     color = '#555';
   }
@@ -71,13 +76,30 @@ function Word(i, x, y, h, c) {
     color = '#aaa';
   }
 
-  this.text = new PIXI.Text(wordSet.getWord(i), {font: myFont, fill:color});
+  this.text = new PIXI.Text(wordSet.getWord(i), {font: myFont, fill:this.color});
   this.text.x = x; this.text.y = y;
 
   this.p_start = {x: this.text.x, y: this.text.y};
   this.p_end = {x: this.text.x, y: this.text.y};
   this.v = {x: 0, y: 0};
   this.a = {x: 0, y: 0};
+
+  this.setSize = function(s) {
+    console.log("setting size");
+    this.fontSize = s;
+    this.width = s * wordSet.ratios[i];
+
+    // save the old x & y
+    var x = this.text.x;
+    var y = this.text.y;
+
+    // replace the Pixi text object
+    this.text = new PIXI.Text(wordSet.getWord(i), {font: this.getFontString(s), fill:this.color});
+
+    // put back our replaced x, y values
+    this.text.x = x;
+    this.text.y = y;
+  }
 
   this.translate = function(x, y) {
     this.text.x += x; this.text.y += y;

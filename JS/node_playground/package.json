@@ -1,14 +1,16 @@
 {
-  "name": "word_test",
+  "name": "WordCloudExperiments",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Xiao Xiao",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "socket.io": "^1.3.6"
   }
 }

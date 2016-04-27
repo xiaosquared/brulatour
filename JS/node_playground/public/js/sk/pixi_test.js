@@ -23,7 +23,7 @@ function setup() {
   wordSet.init();
 
   // setup the renderer
-  renderer = PIXI.autoDetectRenderer(pixiWidth, pixiHeight,{backgroundColor : 0xcccccc});
+  renderer = PIXI.autoDetectRenderer(pixiWidth, pixiHeight,{backgroundColor : 0x111111});
   document.body.appendChild(renderer.view);
   renderer.view.style.position = 'absolute';
   renderer.view.style.left = '50%';
@@ -38,6 +38,7 @@ function setup() {
     var w = new Word(~~(Math.random() * 25),
                     Math.random() * pixiWidth,
                     Math.random() * pixiHeight, 5);
+    w.setVelocity(Math.random(0) * 50 - 25, Math.random() * 50 - 25);
     stage.addChild(w.text);
     words.push(w);
   }
