@@ -32,6 +32,8 @@ void setup() {
   
   wordClusters = new ArrayList<WordCluster>();
   parseJSON();
+  
+  translate(0, -500);
 }
 
 void draw() {

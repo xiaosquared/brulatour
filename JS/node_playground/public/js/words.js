@@ -70,10 +70,10 @@ function Word(i, x, y, h, c) {
   var myFont = this.getFontString(h);
   this.color = '#fff';
   if (c == 20) {
-    color = '#555';
+    this.color = '#555';
   }
   else if (c == 100) {
-    color = '#aaa';
+    this.color = '#aaa';
   }
 
   this.text = new PIXI.Text(wordSet.getWord(i), {font: myFont, fill:this.color});

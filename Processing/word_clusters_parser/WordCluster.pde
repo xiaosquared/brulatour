@@ -26,8 +26,12 @@ class WordCluster {
       
       if (bAnimate)
         w.update();
-        
+  
+      pushMatrix();
+      translate(0, -100);
+      scale(0.8);
       w.draw();
+      popMatrix();
     }
   }
 
