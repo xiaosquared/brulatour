@@ -104,6 +104,11 @@ function Word(i, x, y, h, c) {
   this.translate = function(x, y) {
     this.text.x += x; this.text.y += y;
     this.p_start.x = this.text.x; this.p_start.y = this.text.y;
+    this.p_end.x = this.text.x; this.p_end.y = this.text.y;
+  }
+
+  this.setPosition = function(x, y) {
+    this.text.x = x; this.text.y = y;
   }
 
   this.setVelocity = function(x, y) {
