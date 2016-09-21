@@ -1,0 +1,57 @@
+One Floor UP
+
+lifting UP!
+continuing UP!
+slowing UP
+Up Start Time: 1101
+Up Steady Time: 2735
+Up Stop Time: 1975
+Total Time Up: 5811
+STOPPED!
+
+
+Up Start Time: 251
+Up Steady Time: 2777
+Up Stop Time: 2256
+Total Time Up: 5284
+STOPPED!
+
+continuing UP!
+slowing UP
+Up Start Time: 261
+Up Steady Time: 2606
+Up Stop Time: 20
+Total Time Up: 2887
+STOPPED!
+
+Up Start Time: 931
+Up Steady Time: 2368
+Up Stop Time: 2236
+Total Time Up: 5535
+STOPPED!
+
+Up Start Time: 241
+Up Steady Time: 2878
+Up Stop Time: 1766
+Total Time Up: 4885
+STOPPED!
+
+
+// two floors
+Up Start Time: 30
+Up Steady Time: 3840
+Up Stop Time: 50
+Total Time Up: 3920
+STOPPED!
+
+Up Start Time: 40
+Up Steady Time: 4282
+Up Stop Time: 2800
+Total Time Up: 7122
+STOPPED!
+
+Up Start Time: 20
+Up Steady Time: 3881
+Up Stop Time: 81
+Total Time Up: 3982
+STOPPED!

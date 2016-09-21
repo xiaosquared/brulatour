@@ -2,7 +2,6 @@
 // 
 // Prints out state of movement based on Z acceleration
 // Also prints out how long it takes each time going up
-//
 // GOAL: figure out difference between going up 1 floor vs two floors
 // and at which point in real time the Arduino could determine what is happening
 //
