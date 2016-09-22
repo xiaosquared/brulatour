@@ -1,4 +1,4 @@
-# brulatour
+# Brulatour "Word Cloud" Project
 
 Notebook of code sketches
 
@@ -54,4 +54,15 @@ Putting previous parts together.
 
 ## Water simulation
 
-### 1. Water Test
+### 1. Spring Test
+	- Models a single vertical spring with damping
+
+### 2. Water Test
+ 	- A row of springs that behaves like water surface!
+
+### 3. Word Wave
+	- Adding words to the surface of the Wave
+
+### 4. Word Wave Letters
+	-	letters controlled by individual springs
+	- makes the words look like part of the wave, not just floating on the water!

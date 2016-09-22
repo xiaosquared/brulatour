@@ -9,6 +9,7 @@
 // for data gathered
 //
 // This code has false positives for "lifting off" - triggers when door opens
+// Uses a simple thresholding on raw accelerometer data
  
 #include <SparkFun_ADXL345.h>         
 

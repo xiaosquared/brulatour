@@ -1,8 +1,8 @@
 # 9.20.16
 # to run: python plotZAvg.py <filename>
+# Purpose: to test the running average calculation of Arduino
 
 import matplotlib.pyplot as plt
-import numpy as np
 import sys
 
 # Get data from file
