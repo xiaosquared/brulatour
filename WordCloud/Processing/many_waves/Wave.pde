@@ -9,13 +9,7 @@ class Wave {
   int selected = -1;
   
   boolean bDrawLine = true;
-  
-  String t = "The rest of my days I'm going to spend on the sea.";
-  WavyText wt;
-  
-  String t2 = "--Tenessee Williams, A Streetcar Named Desire";
-  WavyText wt2;
-  
+
   Wave(PVector startPos, int radius, int n) {
     springs = new Spring[n];
     leftDeltas = new float[n];
@@ -28,12 +22,6 @@ class Wave {
       Spring s = new Spring(new PVector(x, y), radius);
       springs[i] = s;
     }
-    
-    wt = new WavyText(t, 24, 200, 0);
-    wt.assignSprings(springs);
-    
-    wt2 = new WavyText(t2, 18, 650, 50);
-    wt2.assignSprings(springs);
   }
   
   void update() {
@@ -66,14 +54,11 @@ class Wave {
     for (int i = 0; i < springs.length; i++) {
       springs[i].draw(bDrawLine);
     }
-    
-    wt.draw(springs);
-    wt2.draw(springs);
   }
   
   void mousePressed() {
     for (int i = 0; i < springs.length; i++) {
-      if (springs[i].pullingParticle(mouseX)) {
+      if (springs[i].pullingParticle(mouseX, mouseY)) {
         selected = i;
       }
     }

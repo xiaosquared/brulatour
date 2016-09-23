@@ -3,15 +3,15 @@
 // Word Wave Letters
 //
 // letters controlled by individual springs
-// makes the words look like part of the wave, not just floating ont he water!
+// makes the words look like part of the wave, not just floating on the water!
 
 PFont font;
 Wave wave;
-int PARTICLE_WIDTH = 8;
+int PARTICLE_WIDTH = 4;
 
 void setup() {
   size(1200, 600, P2D);
-  background(50);
+  background(30);
   stroke(80);
   fill(200);
   
@@ -23,7 +23,7 @@ void setup() {
 }
 
 void draw() {
-  background(50);
+  background(30);
   wave.update();
   wave.draw();
 }

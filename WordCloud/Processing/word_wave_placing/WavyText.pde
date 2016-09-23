@@ -4,7 +4,7 @@ class WavyText {
   String text;
   int len;
   
-  PVector start_pos;
+  PVector start_pos; 
   int font_size;
     
   int[] ctrl_springs; // spring that controls each letter
@@ -37,7 +37,7 @@ class WavyText {
     float caret_x = 0;
     for (int i = 0; i < len; i++) {
       char next_letter = text.charAt(i);
-      float y = start_pos.y + springs[ctrl_springs[i]].pos.y;
+      float y = start_pos.y + springs[ctrl_springs[i]].getHeightDiff();//springs[ctrl_springs[i]].pos.y;
       float x = start_pos.x + caret_x;
       
       text(next_letter, x, y);

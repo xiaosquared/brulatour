@@ -66,3 +66,13 @@ Putting previous parts together.
 ### 4. Word Wave Letters
 	-	letters controlled by individual springs
 	- makes the words look like part of the wave, not just floating on the water!
+
+### 5. Word Wave Placing
+	- Test for how "gradient of words" will look
+	- Click to place random words, lower words will appear smaller
+
+### 6. Many Waves
+	- Several independent waves
+
+### 6. Waving Ambient
+	- Several waves moving themselves randomly
