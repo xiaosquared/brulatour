@@ -9,10 +9,7 @@ class Wave {
   boolean bUpdate = true;  
   int selected = -1;
   
-  boolean bDrawLine = true;
- 
-  String t = "The rest of my days I'm going to spend on the sea. And when I die, I'm going to die on the sea. You know what I shall die of? I shall die of eating an unwashed grape. One day out on the ocean I will die----with my hand in the hand of some nice looking shi";
-  WavyText wt;
+  Ani a;
 
   Wave(PVector startPos, int radius, int n) {
     springs = new Spring[n];
@@ -28,9 +25,6 @@ class Wave {
       Spring s = new Spring(new PVector(x, y), radius);
       springs[i] = s;
     }
-    
-    wt = new WavyText(t, 10, 6, 0);
-    wt.assignSprings(springs);
   }
   
   float getParticleRadius() {
@@ -46,7 +40,12 @@ class Wave {
   }
   
   void perturb(int x) {
-    Ani.to(getSelectedSpring(x).pos, 0.1, "y", random(TARGET_HEIGHT-50, TARGET_HEIGHT+50));
+    a = Ani.to(getSelectedSpring(x).pos, 0.1, "y", random(TARGET_HEIGHT-50, TARGET_HEIGHT+50));
+  }
+  
+  void run() {
+    update();
+    draw();
   }
   
   void update() {
@@ -77,10 +76,8 @@ class Wave {
   
   void draw() {
     for (int i = 0; i < springs.length; i++) {
-      springs[i].draw(bDrawLine);
+      springs[i].draw();
     }
-    
-    wt.draw(springs);
   }
   
   void mousePressed() {

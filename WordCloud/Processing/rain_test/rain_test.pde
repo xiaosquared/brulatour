@@ -38,7 +38,9 @@ void draw() {
     }
   }
   
-  int index = floor(random(25));
-  Particle p = new Particle(new PVector(random(width), start_y), words[index]);
-  particles.add(p);
+  if (random(10) < 1) {
+    int index = floor(random(25));
+    Particle p = new Particle(new PVector(random(width), start_y), words[index]);
+    particles.add(p);
+  }
 }

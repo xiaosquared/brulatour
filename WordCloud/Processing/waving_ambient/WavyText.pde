@@ -17,7 +17,6 @@ class WavyText {
     this.font_size = font_size;
     
     ctrl_springs = new int[len];
-    println(ctrl_springs[0]);
   }
   
   void assignSprings(Spring[] springs) {
@@ -28,6 +27,10 @@ class WavyText {
       float curr_width = textWidth(curr_letter);
       
       caret_x += curr_width;
+      int selected_spring = ceil((start_pos.x + caret_x) / springs[0].diameter);
+      if (selected_spring >= springs.length) {
+        return;
+      }
       ctrl_springs[i] = ceil((start_pos.x + caret_x) / springs[0].diameter);
     }
   }

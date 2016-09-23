@@ -8,8 +8,8 @@ class Particle {
   Particle (PVector l, String w) {
     word = w;
     location = l;
-    acceleration = new PVector(0, 0.05);
-    velocity = new PVector(0, 0);
+    acceleration = new PVector(0, 0.5);
+    velocity = new PVector(0, 20);
     lifespan = 255;
   }
   
