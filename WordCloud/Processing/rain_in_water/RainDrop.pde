@@ -25,12 +25,12 @@ class RainDrop {
   }
   
   void respawn() {
-    pos.x = random(width);
+    pos.x = random(2, width-2);
     pos.y = START_Y;
     vel.y = 15;
   }
   
   void draw() {
-    ellipse(pos.x, pos.y, 4, 4);
+    ellipse(pos.x, pos.y, 3, 3);
   }
 }

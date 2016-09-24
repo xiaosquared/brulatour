@@ -27,7 +27,7 @@ class Spring {
   }
   
   void draw() {
-    ellipse(pos.x, pos.y, diameter, diameter);
+    ellipse(pos.x, pos.y, radius, radius);
   }
 
   // true when x is on the same verical line as particle
@@ -36,7 +36,7 @@ class Spring {
   }
   
   void perturb() {
-    pos.y += random(-20, 20);
+    Ani.to(this.pos, 0.1, "y", random(TARGET_HEIGHT-50, TARGET_HEIGHT+50));
   }
   
   // helper functions

@@ -40,7 +40,7 @@ class Wave {
   }
   
   void perturb(int x) {
-    a = Ani.to(getSelectedSpring(x).pos, 0.1, "y", random(TARGET_HEIGHT-50, TARGET_HEIGHT+50));
+     Ani.to(getSelectedSpring(x).pos, 0.1, "y", random(TARGET_HEIGHT-50, TARGET_HEIGHT+50));
   }
   
   void run() {
