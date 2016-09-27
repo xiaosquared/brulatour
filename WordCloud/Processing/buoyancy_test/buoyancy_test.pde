@@ -1,15 +1,19 @@
 // 9.27.16
 //
-// Falling into Wave 
+// Buoyancy Test
 //
-// Objects fall into water, splashes, sinks to bottom
+// Objects that float on water 
 
 import java.util.*;
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 
 Wave w;
-Rectangle r;
+
+Block b;
+int water_level = 400;
+float water_density = 0.0007;
+
 ArrayList<Particle> splashes;
 int pps = 6;  // particles per splash
 float splash_speed = 4.5;
@@ -17,44 +21,40 @@ float splash_speed = 4.5;
 void setup() {
   size(600, 600);
   background(40);
-  Ani.init(this);
   
+  Ani.init(this);
   w = new Wave(new PVector(2, 400), 2, width/4);
   splashes = new ArrayList<Particle>();
+
 }
 
 void draw() {
   background(40);
-  if (random(100) < 1) 
-    w.perturb(floor(random(4, width-4)));
-  w.run();
   
-  if (r != null) {
-    r.run();
+  // Block
+  if (b != null) {
+    b.update();
+    b.draw();
     
-    // hitting water
-    if (r.pos.y > w.target_height && !r.inWater) {
-      r.inWater = true;
+    if (b.pos.y >= water_level && !b.inWater) {
+      b.inWater = true;
       
-      int left = w.getSelectedSpringIndex((int)r.pos.x);
-      int right = floor(left+r.w/(w.radius*2));
+      int left = w.getSelectedSpringIndex((int)b.pos.x - (int)b.w/2);
+      int right = floor(left+b.w/(w.radius*2));
       for (int i = left; i < right; i++) {
-        w.springs[i].pos.y = r.pos.y + r.h + w.radius;
-        w.springs[i].vel.y = 0;
-      }
+        w.springs[i].pos.y = b.pos.y + b.h/2 + w.radius;
+      }      
       
       createSplash(w.springs[left].pos.x, w.target_height);
       createSplash(w.springs[right].pos.x, w.target_height);
       createSplash(w.springs[(int)left+((right-left)/2)].pos.x, w.target_height);
     }
-    
-    // hitting bottom
-    else if (r.pos.y + r.h > height) {
-      r.pos.y = height - r.h;
-      r.vel.y = 0;
-      r.acc.y = 0;
-    }
   }
+  
+  // Wave
+  if (random(100) < 1) 
+    w.perturb(floor(random(4, width-4)));
+  w.run();
   
   // splashes
   Iterator<Particle> it = splashes.iterator();
@@ -79,5 +79,5 @@ void createSplash(float x, float y) {
 }
 
 void mousePressed() {
-  r = new Rectangle(mouseX, mouseY, random(20, 80), random(10, 20)); 
+  b = new Block(mouseX, -20, random(50, 120), random(10, 30));
 }

@@ -58,6 +58,6 @@ class ParticleManager {
       PVector p = new PVector(x + random(-5, 5), y + random(-12, 12));
       PVector a = new PVector(0, .3);
       splashes.add(new SplashDrop(p, v, a));
-  }
+    }
   }
 }

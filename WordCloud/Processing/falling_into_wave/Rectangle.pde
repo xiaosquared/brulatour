@@ -1,7 +1,8 @@
 class Rectangle extends Particle {
   float w;
   float h;
-  float d = 0;
+  float drag = 0;
+  float d = 0.08;
   boolean inWater = false;
   
   Rectangle(float x, float y, float w, float h) {
@@ -11,10 +12,15 @@ class Rectangle extends Particle {
   }
   
   void update() {
+    if (inWater) {
+      drag = d * vel.y * vel.y;
+      if (vel.y > 0) {
+        drag = -drag;
+      }
+      acc.y = g + drag;  
+    }
     vel.add(acc);
     pos.add(vel);
-    acc.y -= vel.y * vel.y * d;
-    acc.y = max(acc.y, 0);
   }
   
   void run() {
