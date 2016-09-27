@@ -3,44 +3,42 @@ class Wave {
   float[] leftDeltas;
   float[] rightDeltas;
   
-  float TARGET_HEIGHT;
-  float SPREAD = 0.2;
+  float target_height;
+  float spread = 0.2;
+  float radius;
+ 
+  Wave(PVector startPos, float radius, int n) {
+    target_height = startPos.y;
+    this.radius = radius;
 
-  Wave(PVector startPos, int radius, int n) {
     springs = new Spring[n];
     leftDeltas = new float[n];
     rightDeltas = new float[n];
     
-    TARGET_HEIGHT = startPos.y;
-    
     for (int i = 0; i < n; i++) {
-      float x = startPos.x + 2 * radius * i;
+      float x = startPos.x + 2*radius*i;
       float y = startPos.y;
-      
-      Spring s = new Spring(new PVector(x, y), radius);
-      springs[i] = s;
+      springs[i] = new Spring(new PVector(x, y));
     }
-  }
-  
-  float getParticleRadius() {
-    return springs[0].radius;
   }
   
   float getStartX() {
     return springs[0].pos.x;
   }
-   
-  Spring getSelectedSpring(int x) {
-    return springs[floor((x - getStartX()) / (getParticleRadius() * 2))];
-  }
   
+  // perturbs spring closest to x position 
   void perturb(int x) {
-     Ani.to(getSelectedSpring(x).pos, 0.1, "y", random(TARGET_HEIGHT-50, TARGET_HEIGHT+50));
+    Ani.to(getSelectedSpring(x).pos, 0.1, "y", random(target_height-50, target_height+50));
   }
   
-  void run() {
-    update();
-    draw();
+  // returns spring closest to x position
+  Spring getSelectedSpring(int x) {
+    return springs[getSelectedSpringIndex(x)];
+  }
+  
+  // Gets the index of spring closest to x position
+  int getSelectedSpringIndex(int x) {
+    return floor((x-getStartX()) / (radius * 2));
   }
   
   void update() {
@@ -52,11 +50,11 @@ class Wave {
     for (int j = 0; j < 8; j++) {
       for (int i = 0; i < springs.length; i++) {
         if (i > 0) {
-          leftDeltas[i] = SPREAD * (springs[i].getSpringHeight() - springs[i-1].getSpringHeight());
+          leftDeltas[i] = spread * (springs[i].getSpringHeight() - springs[i-1].getSpringHeight());
           springs[i-1].vel.y += leftDeltas[i];
         }
         if (i < springs.length - 1) {
-          rightDeltas[i] = SPREAD * (springs[i].getSpringHeight() - springs[i+1].getSpringHeight());
+          rightDeltas[i] = spread * (springs[i].getSpringHeight() - springs[i+1].getSpringHeight());
           springs[i+1].vel.y += rightDeltas[i];
         }
       }
@@ -70,8 +68,15 @@ class Wave {
   }
   
   void draw() {
+    stroke(100);
+    fill(200);
     for (int i = 0; i < springs.length; i++) {
-      springs[i].draw();
+      ellipse(springs[i].pos.x, springs[i].pos.y, radius, radius);
     }
+  }
+  
+  void run() {
+    update();
+    draw();
   }
 }

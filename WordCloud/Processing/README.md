@@ -74,5 +74,15 @@ Putting previous parts together.
 ### 6. Many Waves
 	- Several independent waves
 
-### 6. Waving Ambient
+### 7. Waving Ambient
 	- Several waves moving themselves randomly
+
+###	8. Rain in Water
+	- Two particle systems! rain + waves that interact
+
+### 9. Splash Particles
+	- test for splashing droplets in all directions
+
+### 10. Splashing Rain
+	- 3 particle systems that interact: wave, rain, splash
+ 	- refactored code for managing particles
