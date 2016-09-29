@@ -2,6 +2,7 @@ class Particle {
   PVector pos;
   PVector vel;
   PVector acc;
+  float g = 0.5;  // force from gravity
   
   Particle(PVector pos) {
     this.pos = pos;
@@ -67,6 +68,10 @@ class Spring extends Particle {
   float getSpringHeight() {
     return pos.y;
   }
+  
+  float getHeightDiff() {
+    return pos.y - target_height;
+  }
 }
 
 class SplashDrop extends Particle {
@@ -90,23 +95,5 @@ class SplashDrop extends Particle {
   
   boolean isDead() {
     return lifespan < 0;
-  }
-}
-
-class RainDrop extends Particle {
-  RainDrop(PVector p, PVector v, PVector a) {
-    super(p, v, a);
-  }
-  
-  void respawn() {
-    pos.x = random(4, width-4);
-    pos.y = -random(50);
-    vel.y = 15;
-  }
-  
-  void draw() {
-    fill(200);
-    stroke(200);
-    ellipse(pos.x, pos.y, 2, 2);
   }
 }

@@ -32,8 +32,8 @@ class Spring {
   
   void draw(boolean bDrawLine) {
     //if (bDrawLine)
-    //  line(pos.x, pos.y, pos.x, height);
-    //  ellipse(pos.x, pos.y, diameter, diameter);
+      //line(pos.x, pos.y, pos.x, height);
+      ellipse(pos.x, pos.y, diameter, diameter);
   }
 
   // true when x is on the same verical line as particle

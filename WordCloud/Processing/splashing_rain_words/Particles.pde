@@ -67,13 +67,20 @@ class Spring extends Particle {
   float getSpringHeight() {
     return pos.y;
   }
+  
+  float getHeightDiff() {
+    return pos.y - target_height;
+  }
 }
 
 class SplashDrop extends Particle {
   float lifespan = 20;
+  char letter;
+  int font_size = 8;
   
-  SplashDrop(PVector p, PVector v, PVector a) {
+  SplashDrop(PVector p, PVector v, PVector a, char l) {
     super(p, v, a);
+    letter = l;
   }
   
   void update() {
@@ -82,10 +89,18 @@ class SplashDrop extends Particle {
   }
   
   void draw() {
-    noStroke();
-    fill(200, min(255, lifespan*30));
-    ellipse(pos.x, pos.y, 2, 2);
+    //noStroke();
+    //fill(200, min(255, lifespan*30));
+    //ellipse(pos.x, pos.y, 2, 2);
+    float theta = map(pos.x,0,width,0,TWO_PI*2);
     
+    fill(200, min(255, lifespan*30));
+    textSize(font_size);
+    pushMatrix();
+    translate(pos.x, pos.y);
+    rotate(theta);
+    text(letter, 0, 0);
+    popMatrix();
   }
   
   boolean isDead() {
@@ -94,19 +109,38 @@ class SplashDrop extends Particle {
 }
 
 class RainDrop extends Particle {
-  RainDrop(PVector p, PVector v, PVector a) {
-    super(p, v, a);
-  }
+  String word;
+  int font_size = 8;
+  float word_width;
+  int shade = (int)random(70, 170);
   
+  RainDrop(PVector p, PVector v, PVector a, String w) {
+    super(p, v, a);
+    word = w;
+    textSize(font_size);
+    word_width = textWidth(w);
+  }
+ 
   void respawn() {
     pos.x = random(4, width-4);
     pos.y = -random(50);
-    vel.y = 15;
+    vel.y = 10;
   }
   
-  void draw() {
-    fill(200);
-    stroke(200);
-    ellipse(pos.x, pos.y, 2, 2);
+  void draw(boolean letters) {
+    if (letters) {
+      fill(shade);
+      textSize(font_size);
+      noStroke();
+      pushMatrix();
+      translate(pos.x, pos.y);
+      rotate(-HALF_PI);
+      text(word, 0, 0);
+      popMatrix();
+    } else {
+      fill(200);
+      stroke(200);
+      ellipse(pos.x, pos.y, 2, 2);
+    }
   }
 }

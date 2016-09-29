@@ -86,3 +86,21 @@ Putting previous parts together.
 ### 10. Splashing Rain
 	- 3 particle systems that interact: wave, rain, splash
  	- refactored code for managing particles
+
+### 11. Falling into Wave
+	- Objects fall into water, splash, and sink to bottom
+
+### 12. Buoyancy Test
+	- Objects that fall into water, splash, and float
+
+### 13. Buoyant Wavy Text
+	- Floating text that moves with the waves
+
+### 14. Splashing Rain Words
+	- Same as Splashing Rain except everything is rendered as letters!
+	
+## Fun with Physics Engines
+
+### 1. Box2d Test
+	- Dropping a bunch of text!
+	- Physics engine is a good way to make a word cloud!

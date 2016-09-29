@@ -1,49 +1,63 @@
-// 9.27.16
+// 9.28.16
 //
-// Buoyancy Test
+// Buoyant Wavy Text
 //
-// - Objects that fall into water, splash, and float   
+// Floating text that moves with the waves
 
 import java.util.*;
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 
-Wave w;
+String[] words;
+int counter = 0;
+PFont font;
+int font_size = 40;
 
-Block b;
+PVector g = new PVector(0, 0.5);  // force from gravity
+float d = 0.03;  // drag coefficient 
 int water_level = 400;
-float water_density = 0.0007;
+float water_density = 0.0008;
 
 ArrayList<Particle> splashes;
 int pps = 6;  // particles per splash
 float splash_speed = 4.5;
 
+Wave w;
+FloatingWavyText t;
+
 void setup() {
-  size(600, 600);
+  size(600, 600, P2D);
   background(40);
+  rectMode(CENTER);
+  
+  initWords();
+  font = createFont("American Typewriter", font_size);
+  textFont(font, font_size);
   
   Ani.init(this);
   w = new Wave(new PVector(2, 400), 2, width/4);
   splashes = new ArrayList<Particle>();
-
 }
 
 void draw() {
   background(40);
-  
-  // Block
-  if (b != null) {
-    b.update();
-    b.draw();
+
+  if (t != null) {
+    t.update();
+    t.draw(w.springs);
     
-    if (b.pos.y >= water_level && !b.inWater) {
-      b.inWater = true;
+    if (t.pos.y >= water_level && !t.inWater) {
+      t.inWater = true;
+      t.assignSprings(w.radius);
       
-      int left = w.getSelectedSpringIndex((int)b.pos.x - (int)b.w/2);
-      int right = floor(left+b.w/(w.radius*2));
+      // perturb wave
+      int left = w.getSelectedSpringIndex((int)t.pos.x - (int)t.w/2);
+      int right = floor(left+t.w/(w.radius*2));
+      left = max(0, left);
+      right = min(width, right);
       for (int i = left; i < right; i++) {
-        w.springs[i].pos.y = b.pos.y + b.h/2 + w.radius;
-      }      
+        w.springs[i].pos.y = t.pos.y + t.h/2 + w.radius;
+      }
       
       createSplash(w.springs[left].pos.x, w.target_height);
       createSplash(w.springs[right].pos.x, w.target_height);
@@ -51,9 +65,6 @@ void draw() {
     }
   }
   
-  // Wave
-  if (random(100) < 1) 
-    w.perturb(floor(random(4, width-4)));
   w.run();
   
   // splashes
@@ -78,6 +89,16 @@ void createSplash(float x, float y) {
   }
 }
 
+
 void mousePressed() {
-  b = new Block(mouseX, -20, random(50, 120), random(10, 30));
+  t = new FloatingWavyText(mouseX, mouseY, words[counter], font_size);
+  counter++;
+  counter = counter %3;
+}
+
+void initWords() {
+  words = new String[3];
+  words[0] = "Tremé";
+  words[1] = "Vieux carré";
+  words[2] = "Marigny";
 }

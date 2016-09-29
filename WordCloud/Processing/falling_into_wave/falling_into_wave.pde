@@ -2,7 +2,7 @@
 //
 // Falling into Wave 
 //
-// Objects fall into water, splashes, sinks to bottom
+// Objects fall into water, splash, and sink to bottom
 
 import java.util.*;
 import de.looksgood.ani.*;

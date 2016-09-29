@@ -31,7 +31,7 @@ class ParticleManager {
         Spring s = w.getSelectedSpring((int)r.pos.x);
         r.respawn();
         s.perturb();
-        createSplash((int)s.pos.x, (int)s.pos.y);
+        createSplash(s.pos.x, s.pos.y);
       }
     }
     
@@ -50,7 +50,7 @@ class ParticleManager {
     }
   }
   
-  void createSplash(int x, int y) {
+  void createSplash(float x, float y) {
     for (int i = 0; i < pps; i ++) {
       float radians = random(0, PI);
       PVector v = new PVector(splash_speed*cos(radians)/2 + random(-1, 1),
