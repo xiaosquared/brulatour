@@ -35,7 +35,6 @@ class WavyText {
   }
   
   void draw(Spring[] springs) {
-    stroke(200);
     textSize(font_size);
     float caret_x = 0;
     for (int i = 0; i < len; i++) {

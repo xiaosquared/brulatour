@@ -1,17 +1,18 @@
 class Splashing {
-  ArrayList<Particle> droplets;
+  ArrayList<SplashDrop> droplets;
   int pps = 6;  // particles per splash
   float splash_speed = 4.5;
   
   Splashing() {
-    droplets = new ArrayList<Particle>();
+    droplets = new ArrayList<SplashDrop>();
   }
   
-  void run() {
-    Iterator<Particle> it = droplets.iterator();
+  void run(boolean letters) {
+    Iterator<SplashDrop> it = droplets.iterator();
     while (it.hasNext()) {
-      Particle p = it.next();
-      p.run();
+      SplashDrop p = it.next();
+      p.update();
+      p.draw(letters);
       if (p.isDead()) {
         it.remove();
       }

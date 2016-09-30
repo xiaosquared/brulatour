@@ -98,7 +98,10 @@ Putting previous parts together.
 
 ### 14. Splashing Rain Words
 	- Same as Splashing Rain except everything is rendered as letters!
-	
+
+### 15. Scrolling Text Wave
+	- Text that moves along the wave
+
 ## Fun with Physics Engines
 
 ### 1. Box2d Test

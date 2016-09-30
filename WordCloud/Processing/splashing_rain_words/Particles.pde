@@ -45,9 +45,9 @@ class Particle {
 }
 
 class Spring extends Particle {
-  float k = 0.025;
+  float k = 0.0025;
   float target_height;
-  float damping = 0.04;
+  float damping = 0.03;
   
   Spring(PVector pos) {
     super(pos);
@@ -88,19 +88,21 @@ class SplashDrop extends Particle {
     super.update();
   }
   
-  void draw() {
-    //noStroke();
-    //fill(200, min(255, lifespan*30));
-    //ellipse(pos.x, pos.y, 2, 2);
-    float theta = map(pos.x,0,width,0,TWO_PI*2);
-    
-    fill(200, min(255, lifespan*30));
-    textSize(font_size);
-    pushMatrix();
-    translate(pos.x, pos.y);
-    rotate(theta);
-    text(letter, 0, 0);
-    popMatrix();
+  void draw(boolean letters) {
+    if (letters) {
+      float theta = map(pos.x,0,width,0,TWO_PI*2);
+      fill(200, min(255, lifespan*30));
+      textSize(font_size);
+      pushMatrix();
+      translate(pos.x, pos.y);
+      rotate(theta);
+      text(letter, 0, 0);
+      popMatrix(); 
+    } else {
+      noStroke();
+      fill(200, min(255, lifespan*30));
+      ellipse(pos.x, pos.y, 2, 2);
+    }
   }
   
   boolean isDead() {
