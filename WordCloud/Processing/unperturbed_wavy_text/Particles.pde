@@ -62,7 +62,8 @@ class Spring extends Particle {
   }
   
   void perturb() {
-    Ani.to(this.pos, 0.1, "y", random(target_height - 50, target_height + 50));
+    //Ani.to(this.pos, 0.1, "y", random(target_height - 50, target_height + 50));
+    Ani.to(this.pos, 0.1, "y", target_height - 50);
   }
   
   float getSpringHeight() {
@@ -74,54 +75,11 @@ class Spring extends Particle {
   }
 }
 
-class SplashDrop extends Particle {
-  float lifespan = 20;
-  char letter;
-  int font_size = 8;
-  
-  SplashDrop(PVector p, PVector v, PVector a, char l) {
-    super(p, v, a);
-    letter = l;
-  }
-  
-  void update() {
-    lifespan --;
-    super.update();
-  }
-  
-  void draw(boolean letters) {
-    if (letters) {
-      float theta = map(pos.x,0,width,0,TWO_PI*2);
-      fill(200, min(255, lifespan*30));
-      textSize(font_size);
-      pushMatrix();
-      translate(pos.x, pos.y);
-      rotate(theta);
-      text(letter, 0, 0);
-      popMatrix(); 
-    } else {
-      noStroke();
-      fill(200, min(255, lifespan*30));
-      ellipse(pos.x, pos.y, 2, 2);
-    }
-  }
-  
-  boolean isDead() {
-    return lifespan < 0;
-  }
-}
-
 class RainDrop extends Particle {
-  String word;
-  int font_size = 8;
-  float word_width;
   int shade = (int)random(70, 170);
   
-  RainDrop(PVector p, PVector v, PVector a, String w) {
+  RainDrop(PVector p, PVector v, PVector a) {
     super(p, v, a);
-    word = w;
-    textSize(font_size);
-    word_width = textWidth(w);
   }
  
   void respawn(boolean stop) {
@@ -131,20 +89,10 @@ class RainDrop extends Particle {
     acc.y = stop ? 0 : 0.1;
   }
   
-  void draw(boolean letters) {
-    if (letters) {
-      fill(shade);
-      textSize(font_size);
-      noStroke();
-      pushMatrix();
-      translate(pos.x, pos.y);
-      rotate(-HALF_PI);
-      text(word, 0, 0);
-      popMatrix();
-    } else {
-      fill(200);
-      stroke(200);
-      ellipse(pos.x, pos.y, 2, 2);
-    }
+  void draw() {
+    fill(200);
+    stroke(200);
+    ellipse(pos.x, pos.y, 2, 2);
+    
   }
 }

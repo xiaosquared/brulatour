@@ -102,6 +102,13 @@ Putting previous parts together.
 ### 15. Scrolling Text Wave
 	- Text that moves along the wave
 
+### 16. Traveling Wave Text
+ 	- Natural looking ambient waves
+	- Many waves + rain + splash + falling text
+
+### 17. Multi Wave
+  - Better abstraction for multiple waves
+
 ## Fun with Physics Engines
 
 ### 1. Box2d Test

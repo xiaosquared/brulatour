@@ -23,7 +23,7 @@ class WavyText {
     textSize(font_size);
     
     float caret_x = 0;
-    int selected_spring = 0;
+    int selected_spring;
     
     for (int i = 0; i < len; i++) {
       char next_letter = text.charAt(i);
@@ -32,7 +32,6 @@ class WavyText {
       // find the spring associated with the letter
       selected_spring = (int) (x / spring_width);
       if (selected_spring >= springs.length || selected_spring < 0) {
-        vel.x = -vel.x;
         return;
       }
       

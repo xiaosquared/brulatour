@@ -77,7 +77,7 @@ class Spring extends Particle {
 class SplashDrop extends Particle {
   float lifespan = 20;
   char letter;
-  int font_size = 8;
+  int font_size = 9;
   
   SplashDrop(PVector p, PVector v, PVector a, char l) {
     super(p, v, a);
