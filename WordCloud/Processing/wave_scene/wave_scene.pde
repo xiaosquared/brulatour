@@ -26,6 +26,9 @@ float water_density = 0.00007;
 boolean renderLetters = true;
 boolean isRaining = false;
 
+int rainDuration = 2000;
+int lastRainTime = 0;
+
 void setup() {
   size(1200, 600, P2D);
   background(30);
@@ -37,12 +40,17 @@ void setup() {
   
   sp = new Splashing();
   r = new MultiRain(mw, sp, words, 12);
+  
+  initFallingWord();
 }
 
 void draw() {
   background(30);
   
   if (fwt != null) {
+    if (fwt.opacity == 0)
+      initFallingWord();
+    
     fwt.update();
     fwt.draw();
     
@@ -54,6 +62,10 @@ void draw() {
   mw.draw(renderLetters);
   sp.run(true); 
   r.run(true, isRaining);
+  
+  if (isRaining) {
+    
+  }
 }
 
 void initWords() {
@@ -62,10 +74,12 @@ void initWords() {
   textFont(font, font_size);  
 }
 
+void initFallingWord() {
+  fwt = new FloatyWavyText(words[(floor(random(words.length)))], random(70, 90), random(0, width*.66), -20, mw.waves[0]);
+}
+
 void mousePressed() {
   println(mouseX, mouseY);
-  Wave myWave = mw.waves[0];
-  fwt = new FloatyWavyText(words[(floor(random(words.length)))], random(70, 90), mouseX, -20, myWave);
 }
 
 void keyPressed() {

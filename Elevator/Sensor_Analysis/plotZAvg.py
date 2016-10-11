@@ -11,7 +11,7 @@ lines = open(filename).read().splitlines()
 lines = map(lambda q: q.split(','), lines)
 
 # Separate z values and avg values
-z = map(lambda q: int(q[0]), lines)
+z = map(lambda q: float(q[0]), lines)
 avg = map(lambda q: float(q[1]), lines)
 
 # Determine which portion to plot
@@ -27,6 +27,14 @@ elif numargs == 4:
 z_plot = z[start:end]
 avg_plot = avg[start:end]
 
+# Diff between consecutive frames of averages
+# diff = list(avg_plot)
+# for i in range(1, len(diff)):
+#     diff[i] = (avg_plot[i] - avg_plot[i-1])*10 + 58
+
+
 plt.plot(z_plot, 'o', markersize=3, color='b')
 plt.plot(avg_plot, 'x', markersize=3, color='r')
+#plt.plot(diff, 'x', markersize=3, color='g')
+
 plt.show()

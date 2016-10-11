@@ -65,6 +65,11 @@ class Spring extends Particle {
     Ani.to(this.pos, 0.1, "y", random(target_height - 50, target_height + 50));
   }
   
+  void perturbRain() {
+    Ani.to(this.pos, 0.1, "y", random(target_height + 10, target_height + 40));
+  }
+  
+  
   float getSpringHeight() {
     return pos.y;
   }

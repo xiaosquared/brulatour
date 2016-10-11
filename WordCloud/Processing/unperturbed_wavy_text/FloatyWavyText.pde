@@ -12,6 +12,9 @@ class FloatyWavyText {
   
   float[] prev_heights;
   
+  float opacity = 1;
+  float lifespan = 3;
+  
   FloatyWavyText(String t, float fs, float x, float y) {
     text = t;
     len = t.length();
@@ -36,10 +39,27 @@ class FloatyWavyText {
   void hitWater() {
     inWater = true;
     vel.x = random(-3, 2);
+    
+    Ani.to(this, lifespan, 1, "opacity", 0, Ani.QUAD_IN_OUT); 
+  }
+  
+  void reset() {
+    opacity = 1;
+    inWater = false;
+    lifespan = random(3, 5);
+    start_pos.y = -200;
+    vel.y = 5;
+    acc = g.copy();
   }
   
   void update() {
     PVector pos = start_pos.copy();
+    
+    if (opacity == 0) {
+      reset();
+      return;
+    }
+    
     if (inWater) {
       // Buoyancy force
       float submerged = (pos.y - 350 + font_size/2) * text_width;
@@ -67,6 +87,7 @@ class FloatyWavyText {
   
   void superDraw() {
     textSize(font_size);
+    fill(200, 255*opacity);
     
     float caret_x = 0;
     int l_spring;

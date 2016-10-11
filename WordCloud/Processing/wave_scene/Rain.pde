@@ -56,7 +56,7 @@ class Rain {
       if (r.pos.y > target_wave.target_height) {
         Spring s = target_wave.getSelectedSpring((int)r.pos.x);
         r.respawn(!raining);
-        s.perturb();
+        s.perturbRain();
         sp.createSplash(s.pos.x, s.pos.y);
       }
     }    

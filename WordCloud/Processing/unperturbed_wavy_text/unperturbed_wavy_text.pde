@@ -3,6 +3,8 @@
 // Unperturbed Wavy Text
 //
 // Text that floats with the waves undisturbed by perturbations
+//
+// 10.5.16: fading away
 
 import java.util.*;
 import de.looksgood.ani.*;
