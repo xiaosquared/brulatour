@@ -2,7 +2,7 @@
 //
 // Up Down V2
 //
-// Detects when elevator is going up or down and turns out LEDs
+// Detects when elevator is going up or down and turns on LEDs
 
 #include <SparkFun_ADXL345.h>
 
@@ -18,7 +18,7 @@ float interval[INTERVAL_SIZE];
 int offset = 0;
 unsigned long lastChangeTime = millis();
 unsigned long currentTime;
-int CHANGE_TIMEOUT = 500;
+int CHANGE_TIMEOUT = 5000;
 
 // Indicator Lights
 int UP_LED = 3;

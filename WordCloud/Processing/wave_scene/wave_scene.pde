@@ -40,6 +40,7 @@ void setup() {
   
   sp = new Splashing();
   r = new MultiRain(mw, sp, words, 12);
+  lastRainTime = millis();
   
   initFallingWord();
 }
@@ -63,8 +64,14 @@ void draw() {
   sp.run(true); 
   r.run(true, isRaining);
   
-  if (isRaining) {
-    
+  int current_time = millis();
+  if (current_time - lastRainTime > rainDuration) {
+    isRaining = !isRaining;
+    lastRainTime = current_time;
+    if (isRaining) {
+      r.restart();
+    }
+    rainDuration = int(random(10, 20) * 1000); 
   }
 }
 
@@ -89,6 +96,7 @@ void keyPressed() {
       break;
     case 'r':
       isRaining = !isRaining;
+      lastRainTime = millis();
       if (isRaining)
         r.restart();
       break;
