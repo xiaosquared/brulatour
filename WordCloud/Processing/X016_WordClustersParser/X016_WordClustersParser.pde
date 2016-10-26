@@ -8,7 +8,7 @@
 
 import java.util.*;
 
-String filename = "bourbon2-words.json";
+String filename = "bourbon1-words.json";
 
 WordSet ws;
 ArrayList<WordCluster> wordClusters;

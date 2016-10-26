@@ -10,7 +10,7 @@
 import java.util.*;
 
 JSONArray values;
-String filename = "bourbon2";
+String filename = "bourbon1";
 String inputFilename = filename + ".json";
 String outputFilename = filename + "-words.json";
 
