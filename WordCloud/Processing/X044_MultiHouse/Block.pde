@@ -3,7 +3,6 @@ class Block {
   House[] houses = new House[3];
   
   float scale = 0.5;
-  
   PVector origin = new PVector(0, 200);
   
   Block() {

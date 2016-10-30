@@ -3,9 +3,11 @@
 // Multi House
 //
 // Draws several houses from JSON files
-// 
+// Animation test... but it's very slow because we are drawing a lot
+// TRY: drawing each house onto an image, doing it only once at the beginning. Then it should be faster...
 
 import java.util.*;
+import de.looksgood.ani.*;
 
 WordSet ws;
 PFont font;
@@ -23,6 +25,7 @@ void setup() {
   textFont(font, defaultFontSize);
  
   block = new Block();
+  Ani.init(this);
 }
 
 void draw() {
@@ -35,5 +38,9 @@ void mousePressed() {
 }
 
 void keyPressed() {
-    
+  if (keyCode == 37) {
+    Ani.to(this.block.origin, 3, "x", 100);    
+  } else if (keyCode == 39) {
+    Ani.to(this.block.origin, 3, "x", -100);    
+  }
 }

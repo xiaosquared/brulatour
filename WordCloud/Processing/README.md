@@ -129,3 +129,9 @@ Notebook of code sketches
 ### 42. Box2d Test
 	- Dropping a bunch of text!
 	- Physics engine is a good way to make a word cloud!
+
+### 43. Flocking Test
+	- Adapted from Shiffman's code. Word "cloud" flocking around. 	
+
+### 44. Multi House
+	- A block of houses. Can translate and scale all of them at once. 

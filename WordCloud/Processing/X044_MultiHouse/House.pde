@@ -2,15 +2,15 @@ class House {
   
   ArrayList<WordCluster> wordClusters;
   
-  PVector offset;
+  PVector origin;  // (x, y) to eliminate space from left and upper edge
   float width = 0;  
   
-  House(String filename, WordSet ws, PVector offset, float width) {
+  House(String filename, WordSet ws, PVector origin, float width) {
     wordClusters = new ArrayList<WordCluster>();
   
     parseJSON(filename, wordClusters, ws);
     
-    this.offset = offset;
+    this.origin = origin;
     this.width = width;
   }
   
@@ -20,7 +20,7 @@ class House {
   
   void draw(float xTrans, float yTrans, float scale) {
     for (WordCluster wc : wordClusters) {
-      wc.draw((xTrans - offset.x) * scale, (yTrans - offset.y) * scale, scale);
+      wc.draw((xTrans - origin.x) * scale, (yTrans - origin.y) * scale, scale);
     }
   }
   
