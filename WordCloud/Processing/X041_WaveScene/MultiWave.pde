@@ -29,9 +29,9 @@ class MultiWave {
     }
   }
   
-  void initText(String[] words, float s_font_size, float e_font_size) {
+  void initText(String[] words, float small_font_size, float large_font_size) {
     for (int i = 0; i < waves.length; i++) {
-      float fs = (e_font_size - s_font_size)/waves.length*i + s_font_size;
+      float fs = (large_font_size - small_font_size)/waves.length*i + small_font_size;
       waves[i].initText(words, fs, 0, waves[i].springs.length);
     }
   }

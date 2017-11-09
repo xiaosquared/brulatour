@@ -13,15 +13,16 @@ ADXL345 adxl = ADXL345(10);
 
 // Z Acceleration
 float REST, UP_THRESH, DOWN_THRESH, UP_STOP_THRESH, DOWN_STOP_THRESH;
-float THRESH_AMT = 2;
+float THRESH_AMT = 2.5;
 
 // Running average
 const int INTERVAL_SIZE = 10;
 float interval[INTERVAL_SIZE];
 int offset = 0;
-unsigned long lastChangeTime = millis();
+
+int CHANGE_TIMEOUT = 5000; // WHAT ABOUT FOR THE VERY FIRST TIME???
+unsigned long lastChangeTime = millis() + CHANGE_TIMEOUT;
 unsigned long currentTime;
-int CHANGE_TIMEOUT = 2000;
 
 // Indicator Lights
 int UP_LED = 3;
@@ -32,23 +33,25 @@ int TWO_LED = 2;
 int REST_BTN = 9;
 int UP_BTN = 7;
 int DOWN_BTN = 8;
+int CALIBRATE_BTN = 6;
 unsigned long lastButtonPress = millis();
-int BUTTON_TIMEOUT = 500;
+int BUTTON_TIMEOUT = 1500;
 
 // State
 enum elevState {RESTING, UP, DOWN};
-extern elevState state = RESTING;
+elevState state = RESTING;
 int upTriggerCount = 0;
 int downTriggerCount = 0;
 int stopTriggerCount = 0;
 
 int TRIGGER_THRESH = 20;  // how many consecutive frames above or below thresh
                           // to switch states
-int STOP_THRESH = 70;     
+int STOP_THRESH = 30;     
 
 // One or two floors
-int TWO_FLOOR_TIME_UP = 6900;
-int TWO_FLOOR_TIME_DOWN = 9820; 
+int TWO_FLOOR_TIME_UP = 4000;
+int TWO_FLOOR_TIME_DOWN = 4800; 
+int TIME_OUT_TIME = 7000;
 /////////////////////////////////////////////////////////////////////////////
 
 void setup() {
@@ -67,7 +70,7 @@ void loop() {
   if (handleButtons())
     return;
 
-  delay(10);  
+  delay(5);  
   switch(state) {
     case RESTING:
       if (accel > UP_THRESH) {
@@ -77,63 +80,78 @@ void loop() {
         upTriggerCount = 0;
         downTriggerCount ++;
       } else {
-        upTriggerCount = 0;
-        downTriggerCount = 0;
+        upTriggerCount = max(0, upTriggerCount - 5);
+        downTriggerCount = max (0, downTriggerCount - 5);
       }
 
       if (currentTime - lastChangeTime > CHANGE_TIMEOUT) {
         if (upTriggerCount > TRIGGER_THRESH) {
           state = UP;
           digitalWrite(UP_LED, HIGH);
+          
           Serial.println("UP!");
+          printValue(".....up", millis());
+          
           upTriggerCount = 0;
           downTriggerCount = 0;
+          stopTriggerCount = 0;
 
           lastChangeTime = currentTime;
-        } else if (downTriggerCount > TRIGGER_THRESH) {
+        } 
+        
+        else if (downTriggerCount > TRIGGER_THRESH) {
           state = DOWN;
           digitalWrite(DOWN_LED, HIGH);
+          
           Serial.println("DOWN!");
+          printValue(".....down", millis());
+          
           upTriggerCount = 0;
           downTriggerCount = 0;
-
+          stopTriggerCount = 0;
+          
           lastChangeTime = currentTime;
         }
       }
     break;
 
     case UP:
-      if (currentTime - lastChangeTime > TWO_FLOOR_TIME_UP) {
+      if (currentTime - lastChangeTime > TIME_OUT_TIME) {
+        stopProcedure();
+      }
+      
+      else if (currentTime - lastChangeTime > TWO_FLOOR_TIME_UP) {
         digitalWrite(TWO_LED, HIGH);
       }
       
       if (accel < UP_STOP_THRESH) {
           stopTriggerCount ++;  
-      } 
+      } else if (accel < UP_STOP_THRESH) {
+        stopTriggerCount = max(0, stopTriggerCount - 5);
+      }
+      
       if (stopTriggerCount > STOP_THRESH) {
-          digitalWrite(UP_LED, LOW);
-          digitalWrite(TWO_LED, LOW);
-          state = RESTING;
-          stopTriggerCount = 0;
-
-          lastChangeTime = currentTime;
+          stopProcedure();
       }
     break;
 
     case DOWN:
-      if (currentTime - lastChangeTime > TWO_FLOOR_TIME_DOWN) {
+      if (currentTime - lastChangeTime > TIME_OUT_TIME) {
+        stopProcedure();
+      } 
+      else if (currentTime - lastChangeTime > TWO_FLOOR_TIME_DOWN) {
         digitalWrite(TWO_LED, HIGH);
       }
+      
       if (accel > DOWN_STOP_THRESH) {
         stopTriggerCount ++;
+      } else if (accel < DOWN_STOP_THRESH) {
+        stopTriggerCount = max(0, stopTriggerCount - 5);
       }
+
+      
       if (stopTriggerCount > STOP_THRESH) {
-        digitalWrite(DOWN_LED, LOW);
-        digitalWrite(TWO_LED, LOW);
-        state = RESTING;
-        stopTriggerCount = 0;
-        
-        lastChangeTime = currentTime;
+        stopProcedure();
       }
     break;
   }
@@ -163,9 +181,24 @@ void setAllLights(int state) {
   }
 }
 
+void stopProcedure() {
+  digitalWrite(UP_LED, LOW);
+  digitalWrite(TWO_LED, LOW);
+  digitalWrite(DOWN_LED, LOW);
+  digitalWrite(TWO_LED, LOW);
+                
+  Serial.println("STOP!");
+  printValue(".....stop", millis());
+          
+  state = RESTING;
+  stopTriggerCount = 0;
+
+  lastChangeTime = currentTime;
+}
+
 void calibrateSensors() {
   setAllLights(HIGH);
-  float frames = 5000;
+  float frames = 10000;
 
   double totalAccel = 0;
   for (int i = 0; i < frames; i++) {
@@ -173,14 +206,13 @@ void calibrateSensors() {
     totalAccel += accel;
   }
   REST = totalAccel/frames;
-  UP_THRESH = REST + THRESH_AMT;
-  DOWN_THRESH = REST - THRESH_AMT + 0.5;
-  UP_STOP_THRESH = DOWN_THRESH;
-  DOWN_STOP_THRESH = REST + THRESH_AMT/4;
+  UP_THRESH = REST + THRESH_AMT - 0.5;
+  DOWN_THRESH = REST - THRESH_AMT;
+  UP_STOP_THRESH = DOWN_THRESH - 0.75;
+  DOWN_STOP_THRESH = UP_THRESH + 0.75;
 
   initInterval(REST);
   setAllLights(LOW);
-  printValue("Total", totalAccel);
   printValue("Stationary Z Accel", REST);
 }
 
@@ -227,18 +259,31 @@ boolean handleButtons() {
     digitalWrite(UP_LED, LOW);
     digitalWrite(DOWN_LED, LOW);
     digitalWrite(TWO_LED, LOW);
+    
+    printValue("rest", millis());
   } else if (digitalRead(UP_BTN) == LOW && currentTime - lastButtonPress > BUTTON_TIMEOUT) {
     pressed = true;
     state = UP;
     digitalWrite(UP_LED, HIGH);
     digitalWrite(DOWN_LED, LOW);
     digitalWrite(TWO_LED, LOW);
+
+    printValue("up", millis());
   } else if (digitalRead(DOWN_BTN) == LOW && currentTime - lastButtonPress > BUTTON_TIMEOUT) {
     pressed = true;
     state = DOWN;
     digitalWrite(UP_LED, LOW);
     digitalWrite(DOWN_LED, HIGH);
     digitalWrite(TWO_LED, LOW);
+
+    printValue("down", millis());
+  } else if (digitalRead(CALIBRATE_BTN) == LOW && currentTime - lastButtonPress > BUTTON_TIMEOUT) {
+      pressed = true;
+      state = RESTING;
+      digitalWrite(UP_LED, LOW);
+      digitalWrite(DOWN_LED, LOW);
+      digitalWrite(TWO_LED, LOW);
+      calibrateSensors();
   }
 
   if (pressed) {
@@ -248,6 +293,7 @@ boolean handleButtons() {
 
   return false;
 }
+
 
 
 

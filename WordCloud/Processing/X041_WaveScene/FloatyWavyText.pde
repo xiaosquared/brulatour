@@ -7,7 +7,7 @@ class FloatyWavyText extends WavyText {
   float[] prev_heights;
   float lifespan = 8;
   float opacity = 1;  // 0 is transparent;
-  
+  float water_density = 0.00007;
   
   FloatyWavyText(String t, float fs, float x, float y, Wave target_wave) {
     super(t, fs, x, y);

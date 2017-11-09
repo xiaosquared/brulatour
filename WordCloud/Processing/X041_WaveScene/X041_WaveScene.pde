@@ -21,7 +21,6 @@ MultiRain r;
 Splashing sp;
 
 FloatyWavyText fwt;
-float water_density = 0.00007;
 
 boolean renderLetters = true;
 boolean isRaining = false;
@@ -30,12 +29,12 @@ int rainDuration = 2000;
 int lastRainTime = 0;
 
 void setup() {
-  size(1200, 600, P2D);
+  fullScreen(P2D);
   background(30);
   
   initWords();
   Ani.init(this);
-  mw = new MultiWave(5, new PVector(-20, 400), new PVector(1400, 580), 4, 220, 50);
+  mw = new MultiWave(5, new PVector(-20, height-200), new PVector(width+200, height-20), 4, 220, 50);
   mw.initText(words, 12, 28);
   
   sp = new Splashing();
