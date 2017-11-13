@@ -4,7 +4,7 @@ class Wall {
   ArrayList<Rectangle> bricks;
   
   float x, y;
-  float wall_height;
+  float wall_height, wall_width;
  
   int current_bar_index;
   boolean filled = false;
@@ -14,18 +14,29 @@ class Wall {
     this.y = y;
     this.bar_height = bar_height;
     this.wall_height = wall_height;
+    this.wall_width = wall_width;
     
-    bars = new ArrayList<Bar>();
     bricks = new ArrayList<Rectangle>();
-    
+    initBars();
+  }
+  
+  public boolean isFilled() {
+    return filled;
+  }
+  
+  public void initBars() {
+    bars = new ArrayList<Bar>();
     int num_bars = floor(wall_height/bar_height);
     for (int i = 0; i < num_bars; i++) {
       bars.add(new Bar(0, wall_width));
     }
   }
   
-  public boolean isFilled() {
-    return filled;
+  public void reset() {
+    current_bar_index = 0;
+    filled = false;
+    initBars();
+    bricks.clear();
   }
   
   public void addBrick(float min_brick_width, float max_brick_width) {
@@ -53,7 +64,7 @@ class Wall {
     if (brick != null  && brick_height_multiplier > 1) {
       for (int i = 0; i < brick_height_multiplier; i++) {
         Bar upper_bar = bars.get(current_bar_index + i);
-        Pair upper_bar_interval = upper_bar.getInterval(brick.getMinX()+1); // ugh, the +1 is such a hack
+        Pair upper_bar_interval = upper_bar.getInterval(brick.getMinX()+5); // ugh, the +5 is such a hack
         if (upper_bar_interval != null) {
           upper_bar.subdivide(upper_bar_interval, brick.getMinX(), brick.width);       
         }
