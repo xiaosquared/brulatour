@@ -2,6 +2,8 @@ class Slot {
   float left;
   float right;
   float distance;
+  float failure_count = 0; // if it's attempted to be filled and failed
+  boolean to_remove;
 
   public Slot(float left, float right) {
     this.left = min(left, right);
@@ -29,8 +31,13 @@ class Slot {
     return distance;
   }
 
-  public void draw(float y, float h) {
-    rect(left, y, distance, h);
+  public void draw(float position, float h, boolean isVertical) {
+    if (isVertical) {
+      rect(position, left, h, distance);
+    }
+    else {
+      rect(left, position, distance, h);
+    }
   }
 
   public boolean contains(float val) {

@@ -2,6 +2,8 @@ class Slot {
   float left;
   float right;
   float distance;
+  float failure_count = 0; // if it's attempted to be filled and failed
+  boolean to_remove;
 
   public Slot(float left, float right) {
     this.left = min(left, right);
