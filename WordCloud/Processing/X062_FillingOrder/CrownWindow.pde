@@ -47,13 +47,6 @@ class CrownWindow extends Wall {
       }
     }
   }
-  
-  public void draw() {
-    for (Layer l : layers) {
-      l.draw();
-    }
-    drawWords();
-  }
 }
 
 // same shape but with vertical slices

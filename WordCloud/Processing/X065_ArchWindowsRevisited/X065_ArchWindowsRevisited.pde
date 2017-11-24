@@ -1,27 +1,18 @@
-// 11.21.17
+// 11.23.17
 //
-// Stories and Square Windows
+// Roof
 //
-// Fixed a bug where words sometimes overlap!!!
-// LOL a normal rectangular window is just a wall ahahah
-//
-// 11.22.17
-//
-// Story is a level with windows. Segments wall into two parts so words at the bottom 
-// don't collide with words in window
-//
-// l, o, w - toggles drawing layers, outlines, words
-// any other key resets what we're drawing and fills the whole thing at once 
+// Trapezoidal roof
 //
 
 Story story;
-float x = 100;
-float y = 100;
+float x = 50;
+float y = 50;
 float width = 600;
-float height = 300;
-float layer_thickness = 6;
+float height = 200;
+float layer_thickness = 10;
 
-Wall win;
+Roof roof;
 
 String phrase = "Vieux carré\nMardi Gras\nMississippi River\nLake Pontchartrain\nWar of 1812\nSt. Louis Cathedral\nCarondolet Canal\nsugar\ntobacco\ncotton\nplantation\nCongo Square\nbamboula\nTreme\nMarigny\nlevee\ncypress\nStoryville\nLouis Armstrong\nJelly-Roll Morton\nCreole\nBayou St. John\nJean Lafitte\nFrench Market\nUptown\nDowntown\nhurricane\nslavery\nReconstruction\nantibellum";
 PFont font;
@@ -44,17 +35,25 @@ void setup() {
   wm.addAllWords(phrase);
   //float min_brick_width = wm.getMinWidth(layer_thickness);
   
-  story = new Story(x, y, x+width, y+height, layer_thickness, 50);
-  story.addWindows(3, 40, 60, 50, 70, 10, 100);
+  story = new Story(x, y+height, width, height, layer_thickness, 50);
+  story.addArchWindows(3, 30, 40, 30, 50, 15, 100);
   //story.fillAll();
   story.draw();
 
+  roof = new Roof(x-20, y, width+40, height, layer_thickness, 200);
+  //roof.fillAll();
+  //roof.draw(false, true, true);
+  
+  //ArchWindow aw = new ArchWindow(x, y, 70, 150, layer_thickness, 20);
+  //aw.draw();
+  
 }
 
 void draw() {
-  background(30);
-  story.fillByLayer();
-  story.draw();
+  //background(30);
+  //story.fillByLayer();
+  //story.draw();
+  //roof.draw(false, false, true);
 }
 
 void keyPressed() {

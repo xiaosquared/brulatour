@@ -14,7 +14,7 @@ class Wall {
   float min_brick_width = 5;
   float max_height_scale = 5;
  
-  int hue = 100;
+  int hue;
  
   public Wall() {
     bricks = new ArrayList<Brick>();
@@ -204,16 +204,35 @@ class Wall {
     
     num_gap_layers = ceil(gap*1.5/layer_thickness);
     for (int i = 0; i < num_gap_layers; i++) {      
-      if (bottom_index - i < 0)
+      if (bottom_index - i < 0 || bottom_index - i >= layers.size()) 
         break;
       Layer wall_layer = layers.get(bottom_index - i);
       divideWall(wall_layer, tl.x, br.x, gap);
     }
   }
   
+  void fillAll() {
+    while(!isFilled) {
+      addWord();
+      checkLayer();
+    }
+  }
+  
+  void addWord() {
+    word = wm.getRandomWord();
+      if (!addWordBrick(word, true))
+        addWordBrick(wm.getRandomWord(), false);
+  }
+  
+  void checkLayer() {
+    if (currentLayerFull()) {
+         advanceLayerIndex(); 
+    }
+  }
+  
   public void draw() {
     drawOutline();
-    //drawLayers();
+    drawLayers();
     //drawWords();
   }
   
@@ -241,7 +260,7 @@ class Wall {
   
   void drawLayers() {
     noStroke();
-    fill(50, 100, 100);
+    fill(hue, 100, 100);
     for (Layer l : layers) {
       l.draw();
     }
