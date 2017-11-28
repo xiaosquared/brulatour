@@ -2,14 +2,11 @@ class Story {
   Wall base;
   Wall main;
   ArrayList<Wall> windows;
+  Railing railing;
   
   float layer_thickness;
   int layer_index = 0;
   float gap;
-  
-  boolean draw_outline = true;
-  boolean draw_layers = true;
-  boolean draw_words = true;
   
   public Story(float x, float y, float width, float height, float layer_thickness, int hue) {
     main = new Wall(x, y, width, height, layer_thickness, hue);
@@ -19,13 +16,29 @@ class Story {
   
   void reset() {
     main.reset();
+    
     if (base != null)
       base.reset();
+    
+    if (railing != null)
+      railing.reset();
     
     for (Wall win : windows) {
       win.reset();
       main.addHole(win.tl, win.br, gap);
     }
+  }
+  
+  // TODO: The height ratio is such a hack right now!!!
+  
+  void addRailing(float rail_width, float in_between, float top_rail_height, int hue) {
+   
+    float railing_top_y = main.tl.y + main.height * 0.6;
+    railing = new Railing(new PVector(main.tl.x, railing_top_y),
+                          new PVector(main.width, main.height * 0.4),
+                          rail_width, in_between, top_rail_height, layer_thickness, hue);
+                          
+    shortenWall(railing_top_y);                      
   }
   
   void addWindows(int num, float top_margin, float bot_margin, float side_margin, float in_between, float gap, int hue) {
@@ -42,7 +55,8 @@ class Story {
       windows.add(win);
     }
     
-    splitWall(win_y + win_height + gap);
+    if (bot_margin > 0)
+      splitWall(win_y + win_height + gap);
     
     // create holes in main wall
     for (Wall win : windows) {
@@ -53,8 +67,10 @@ class Story {
   void addArchWindows(int num, float top_margin, float bot_margin, float side_margin, float in_between, float gap, int hue) {
     this.gap = gap;
     
-    float win_width = (width - 2 * side_margin - (num-1) * in_between)/num;  
-    float win_height = height - top_margin - bot_margin;
+    float win_width = (main.width - 2 * side_margin - (num-1) * in_between)/num;  
+    float win_height = main.height - top_margin - bot_margin;
+    
+    //println(win_width + ", " + win_height);
     
     // create the windows
     float win_y = main.tl.y + top_margin;
@@ -95,12 +111,13 @@ class Story {
         }
       }
       
-      // this is for the top gap
-      for (int i = w.layers.size() - 1 ; i > num_gap_layers; i--) {  
+      // this is for the top gap. the 1.2 is a total hack to increase the top gap
+      
+      for (int i = w.layers.size() -1 ; i > num_gap_layers; i--) {
         current_window_layer = w.layers.get(i);
         if (index + num_gap_layers + i >= main.layers.size())
           break;
-        current_wall_layer = main.layers.get(ceil(index + num_gap_layers * 1.2 + i));
+        current_wall_layer = main.layers.get(ceil(index + num_gap_layers * 1.2 + i));  
         if (current_wall_layer != null) {
           main.divideWall(current_wall_layer, current_window_layer.lower_bound, 
                           current_window_layer.upper_bound, gap);
@@ -120,23 +137,32 @@ class Story {
   }
    
   void splitWall(float y) {
-    float new_height_main = y - main.tl.y;
-    float new_height_base = main.br.y - y;
+    shortenWall(y);
     
-    main = new Wall(main.tl.x, main.tl.y, main.width, new_height_main, layer_thickness, main.hue);
-    base = new Wall(main.tl.x, y, main.width, new_height_base, layer_thickness, main.hue);
+    float new_height_base = main.br.y - y;
+    if (new_height_base > layer_thickness)
+      base = new Wall(main.tl.x, y, main.width, new_height_base, layer_thickness, main.hue);
   }
   
+  void shortenWall(float y) {
+    float new_height_main = y - main.tl.y;
+    main = new Wall(main.tl.x, main.tl.y, main.width, new_height_main, layer_thickness, main.hue);
+  }
   
+  // TODO: Add railing stuff... ALSO UP DATE THE CODE...
   void fillByLayer() {
     
-    if (!base.isFilled) {
-      base.addWord();
-      base.checkLayer();
+    if (base != null && !base.isFilled) {
+      base.fillByLayer();
+    }
+    else if (railing != null && !railing.isFilled()) {
+      railing.fillByLayer();  
     }
     else {
+      Word word;
       boolean main_full = main.currentLayerFull(); 
       if (!main_full) {
+        word = wm.getRandomWord();
         main.addWord();
       }
     
@@ -160,21 +186,40 @@ class Story {
   
   void fillAll() {
     main.fillAll();
-    base.fillAll();
-    for (Wall win : windows) {
+  
+    if (railing != null)
+      railing.fillAll();
+    
+    if (base != null)
+      base.fillAll();
+    
+    for (Wall win : windows)
       win.fillAll();
-    }
   }
   
-  void draw() {
+  boolean isFilled() {
+    if (!main.isFilled)
+      return false;
+    for (Wall win : windows) {
+      if (!win.isFilled)
+        return false;
+    }
+    return true;
+  }
+  
+  void draw(boolean outline, boolean layers, boolean words) {
     
-    main.draw(draw_outline, draw_layers, draw_words);
+    main.draw(outline, layers, words);
     
     if (base != null) 
-      base.draw(draw_outline, draw_layers, draw_words);
+      base.draw(outline, layers, words);
+    
+    if (railing != null) {
+      railing.draw(outline, layers, words);
+    }
     
     for (Wall win : windows) {
-      win.draw(draw_outline, draw_layers, draw_words);
+      win.draw(outline, layers, words);
     }
   }
 }

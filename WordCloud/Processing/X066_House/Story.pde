@@ -101,11 +101,13 @@ class Story {
         }
       }
       
+      // this is for the top gap. the 1.2 is a total hack to increase the top gap
+      
       for (int i = w.layers.size() -1 ; i > num_gap_layers; i--) {
         current_window_layer = w.layers.get(i);
         if (index + num_gap_layers + i >= main.layers.size())
           break;
-        current_wall_layer = main.layers.get(index + num_gap_layers + i);
+        current_wall_layer = main.layers.get(ceil(index + num_gap_layers * 1.2 + i));  
         if (current_wall_layer != null) {
           main.divideWall(current_wall_layer, current_window_layer.lower_bound, 
                           current_window_layer.upper_bound, gap);

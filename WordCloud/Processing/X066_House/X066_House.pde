@@ -81,12 +81,16 @@ void draw() {
   fillHouse(h4);
   
   if (!house.isFilled() || !h2.isFilled() || !h3.isFilled() || !h4.isFilled()) {
-      background(30);
-      house.draw(false, false, true);
-      h2.draw(false, false, true);
-      h3.draw(false, false, true);
-      h4.draw(false, false, true);
+    drawHouses();
   }
+}
+
+void drawHouses() {
+  background(30);
+  house.draw(false, false, true);
+  h2.draw(false, false, true);
+  h3.draw(false, false, true);
+  h4.draw(false, false, true);
 }
 
 void fillHouse(House house) {
@@ -95,17 +99,29 @@ void fillHouse(House house) {
   }
 }
 
+void resetHouses() {
+  house.reset();
+  h2.reset();
+  h3.reset();
+  h4.reset();
+}
+
 void keyPressed() {
   switch(key) {
     case 32:
       background(30);
-      house.reset();
-      h2.reset();
-      h3.reset();
-      h4.reset();
+      resetHouses();    
       break;
     case 10:
       go = !go;
+      break;
+    case 'f':
+      resetHouses();
+      house.fillAll();
+      h2.fillAll();
+      h3.fillAll();
+      h4.fillAll();
+      drawHouses();
       break;
   }
 }

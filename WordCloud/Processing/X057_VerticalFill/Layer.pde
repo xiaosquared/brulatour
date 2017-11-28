@@ -20,7 +20,7 @@ class Layer {
   }
   
   public Layer(float left, float right, float position, float layer_height) {
-    new Layer(left, right, position, layer_height, false);
+    this(left, right, position, layer_height, false);
   }
   
   public boolean isFilled() {

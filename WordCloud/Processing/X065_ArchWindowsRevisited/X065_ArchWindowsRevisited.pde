@@ -1,8 +1,8 @@
 // 11.23.17
 //
-// Roof
+// Arch Windows Revisited
 //
-// Trapezoidal roof
+// Built in the windows as part of "story"
 //
 
 Story story;

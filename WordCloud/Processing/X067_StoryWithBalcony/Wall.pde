@@ -16,15 +16,19 @@ class Wall {
  
   int hue;
  
-  public Wall() {
-    bricks = new ArrayList<Brick>();
-  }
- 
-  public Wall(float x, float y, float width, float height, float layer_thickness, int hue) {
+  public Wall(float x, float y, float width, float height, int hue) {
     tl = new PVector(x, y);
     br = new PVector(x + width, y + height);
     this.width = width;
     this.height = height;
+    
+    this.hue = hue;
+    bricks = new ArrayList<Brick>();
+  }
+ 
+  public Wall(float x, float y, float width, float height, float layer_thickness, int hue) {
+    this(x, y, width, height, hue);
+    
     this.layer_thickness = layer_thickness;
     
     layers = new ArrayList<Layer>();
@@ -33,10 +37,7 @@ class Wall {
       float layer_y = y + height - (i * layer_thickness);
       layers.add(new Layer(x, x+width, layer_y, layer_thickness));
     }
-    
-    bricks = new ArrayList<Brick>();
-    
-    this.hue = hue;
+
   }
 
   public Wall(float x, float y, float width, float height, float layer_thickness) {
@@ -77,10 +78,10 @@ class Wall {
       if (height_scale > 1) {
         for (int i = 0; i < height_scale; i++) {
           Layer upper_layer = layers.get(layer_index + i);
-          ArrayList<Slot> overlaps = upper_layer.getOverlappingSlots(brick.getMinX(), brick.getMaxX());
+          ArrayList<Slot> overlaps = upper_layer.getOverlappingSlots(brick.getLowerBound(), brick.getUpperBound());
           if (overlaps.size() > 0) {
             for (Slot upper_slot : overlaps)
-              upper_layer.subdivideSlot(upper_slot, brick.getMinX(), brick.getMaxX(), min_brick_width);
+              upper_layer.subdivideSlot(upper_slot, brick.getLowerBound(), brick.getUpperBound(), min_brick_width);
           }
         }
       }
@@ -102,71 +103,6 @@ class Wall {
     else
       layer_index++;
   }
-  
-  //public ArrayList<CrownWindow> addCrownWindows(int num, float top_margin, 
-  //                                              float bottom_margin, float side_margin, 
-  //                                              float in_between, float gap, int hue) {
-    
-  //  ArrayList<CrownWindow> windows = new ArrayList<CrownWindow>();
-  //  float win_width = (width - 2 * side_margin - (num-1) * in_between)/num;  
-  //  float win_height = height - top_margin - bottom_margin;
-    
-  //  for (int i = 0; i < num; i++) {
-  //    PVector w_tl = new PVector(tl.x + side_margin + i * (in_between + win_width), 
-  //                              tl.y + top_margin);
-  //    PVector w_br = new PVector(w_tl.x + win_width, w_tl.y + win_height);              
-  //    CrownWindow w = new CrownWindow(w_tl, w_br, layer_thickness, hue);
-  //    windows.add(w);
-  //  }
-    
-  //  // segment wall's layers
-  //  // starting from the bottom, get the first wall layer that is relevant
-    
-  //  int index = 0;
-  //  Layer current_wall_layer = layers.get(index);
-  //  Layer current_window_layer;
-  //  while(current_wall_layer.position > br.y - bottom_margin) {
-  //    index++;
-  //    current_wall_layer = layers.get(index);
-  //  }
-    
-  //  // since wall and window layers are the same thickness, we will just increment both
-  //  int num_gap_layers = ceil(gap/layer_thickness);
-    
-  //  for (int j = 0; j < num; j++) {
-  //    CrownWindow w = windows.get(j);
-     
-  //    // this is for the bottom gap
-  //    current_window_layer = w.layers.get(0);
-  //    for (int i = 0; i < num_gap_layers; i++) {
-  //      if (index - i < 0)
-  //        break;
-  //      current_wall_layer = layers.get(index - i);
-  //      if (current_wall_layer != null) {
-  //        divideWall(current_wall_layer, current_window_layer, gap);
-  //      }
-  //    }
-      
-  //    // this is for the top gap
-  //    for (int i = w.getLayers().size() - 1; i > num_gap_layers; i--) {
-  //      current_window_layer = w.layers.get(i);
-  //      current_wall_layer = layers.get(index + num_gap_layers + i);
-  //      if (current_wall_layer != null) {
-  //        divideWall(current_wall_layer, current_window_layer, gap);
-  //      }
-  //    }
-
-  //    // this is for the main area of the window
-  //    for (int i = 0; i < w.getLayers().size(); i++) {
-  //      current_window_layer = w.getLayers().get(i);
-  //      current_wall_layer = layers.get(index + i);
-      
-  //      divideWall(current_wall_layer, current_window_layer, gap);
-  //    }
-       
-  //  }
-  //  return windows;
-  //}
   
   // helper function
   void divideWall(Layer current_wall_layer, float lower_bound, float upper_bound, float gap) {
@@ -213,27 +149,31 @@ class Wall {
   
   void fillAll() {
     while(!isFilled) {
-      addWord();
-      checkLayer();
+      fillByLayer();
     }
   }
   
+  void fillByLayer() {
+    addWord();
+    checkLayer();
+  }
+  
   void addWord() {
-    word = wm.getRandomWord();
+    Word word = wm.getRandomWord();
       if (!addWordBrick(word, true))
         addWordBrick(wm.getRandomWord(), false);
   }
   
   void checkLayer() {
     if (currentLayerFull()) {
-         advanceLayerIndex(); 
+       advanceLayerIndex(); 
     }
   }
   
   public void draw() {
-    drawOutline();
-    drawLayers(); 
-    //drawWords();
+    //drawOutline();
+    drawLayers();
+    drawWords();
   }
   
   public void draw(boolean outline, boolean layers, boolean words) {
@@ -246,7 +186,6 @@ class Wall {
   }
   
   void drawWords() {
-    //stroke(200);
     for (Brick b : bricks) {
       b.draw(false);
     }
