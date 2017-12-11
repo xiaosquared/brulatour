@@ -20,8 +20,12 @@
 // houses fade away word by word randomly  
 // NOTE: will need to update the code for Roof because I changed the class definition
 // in a later sketch
+//
+// Tried moving all the houses with an Ani tween, but it flickers... Maybe it's drawing too much?
+// 
 
 import java.util.Iterator; 
+import de.looksgood.ani.*;
 
 boolean bw_mode = true;
 
@@ -87,22 +91,10 @@ void setup() {
   block.fillAll();
   block.draw(false, false, true);
   
-  bricks = block.getAllBricks().iterator(); 
+  Ani.init(this);
 }
 
 void draw() {
-  //if (!go)
-  //  return;
-  
-  //block.fillByLayer();
-  //background(30);
-  //block.draw();
-  
-  for (int i = 0; i < frameCount/50; i++) {
-    if(bricks.hasNext()) {
-      bricks.next().hue = 0;
-    }
-  }
   background(0);
   block.draw();
 }
@@ -130,7 +122,8 @@ void keyPressed() {
     //block.draw(false, true, true);
     break;
 
-  case 'f':
+  case 't':
+    Ani.to(block.trans, 10, "y", -500, Ani.SINE_IN);
     break;
   case 'a':
     //println("move left");

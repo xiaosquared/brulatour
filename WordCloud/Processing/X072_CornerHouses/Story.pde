@@ -1,4 +1,13 @@
-class Story {
+interface Fillable {
+  void reset();
+  void fillAll();
+  void fillByLayer();
+  boolean isFilled();
+  void draw();
+  void draw(boolean outline, boolean layers, boolean words); 
+}
+
+class Story implements Fillable {
   Wall base;
   Wall main;
   ArrayList<Wall> windows;
@@ -23,19 +32,6 @@ class Story {
   
   float getHeight() {
     return height;
-  }
-
-  ArrayList<Brick> getAllBricks() {
-    ArrayList<Brick> bricks = new ArrayList<Brick>();
-    bricks.addAll(main.bricks);
-    if (base != null)
-      bricks.addAll(base.bricks);
-    for (Wall win : windows) {
-      bricks.addAll(win.bricks);
-    }
-    if (railing != null)
-      bricks.addAll(railing.getBricks());
-    return bricks;
   }
 
   void reset() {
@@ -70,6 +66,14 @@ class Story {
                           rail_width, in_between, top_rail_height, layer_thickness, hue);
                           
     shortenWall(railing_top_y);                      
+  }
+  
+  void addRailingSides(float rail_width, float in_between, float top_rail_height, float left_overhang, float right_overhang, int hue) {
+    float railing_top_y = main.tl.y + main.height * 0.6;
+    railing = new Railing(new PVector(main.tl.x - left_overhang, railing_top_y),
+                          new PVector(main.width + left_overhang + right_overhang, main.height * 0.4),
+                          rail_width, in_between, top_rail_height, layer_thickness, hue);
+    shortenWall(railing_top_y);
   }
   
   void addWindows(int num, float top_margin, float bot_margin, float side_margin, float in_between, float gap, int hue) {
@@ -113,7 +117,7 @@ class Story {
       ArchWindow w = new ArchWindow(w_tl, w_br, layer_thickness, hue);
       windows.add(w);
     }
-    //splitWall(win_y + win_height + gap);
+    
     splitWall(win_y + win_height);
   
     addGapArchWindow();
@@ -170,12 +174,15 @@ class Story {
     }
   }
    
+  // TODO: split wall is actually a combination of createBase and shortenWall
+  
   void splitWall(float y) {
-    float new_height_main = y - main.tl.y;
+    createBase(y);
+    shortenWall(y);
+  }
+  
+  void createBase(float y) {
     float new_height_base = main.br.y - y;
-    
-    main = new Wall(main.tl.x, main.tl.y, main.width, new_height_main, layer_thickness, main.hue);
-
     if (new_height_base > layer_thickness) {
       base = new Wall(main.tl.x, y, main.width, new_height_base, layer_thickness, main.hue);
     }
@@ -241,6 +248,10 @@ class Story {
         return false;
     }
     return true;
+  }
+  
+  void draw() {
+    draw(false, true, true);
   }
   
   void draw(boolean outline, boolean layers, boolean words) {

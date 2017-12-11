@@ -44,16 +44,6 @@ class Railing {
     current_rail = 0;
   }
   
-  ArrayList<Brick> getBricks() {
-    ArrayList<Brick> bricks = new ArrayList<Brick>();
-    for (Column col : rails) {
-      bricks.addAll(col.bricks);
-    }
-    bricks.addAll(top_rail.bricks);
-    bricks.addAll(bottom_rail.bricks);
-    return bricks;
-  }
-  
   void fillAll() {
     bottom_rail.fillAll();
     for (Column rail : rails) {

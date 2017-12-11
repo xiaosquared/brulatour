@@ -6,6 +6,8 @@ class Block {
   
   Wall sidewalk;
   
+  PVector trans = new PVector(0, 0);
+  
   public Block(float x, float y) {
     origin = new PVector(x, y);
     houses = new ArrayList<House>();  
@@ -71,10 +73,16 @@ class Block {
   }
   
   void draw(boolean outline, boolean layers, boolean words) {
+    pushMatrix();
+    translate(trans.x, trans.y);
+    
+    
     for (House h : houses)
       h.draw(outline, layers, words);
     if (sidewalk != null)
       sidewalk.draw(outline, layers, words);
+      
+    popMatrix();   
   }
   
   void draw() {

@@ -1,5 +1,3 @@
-import java.util.HashSet;
-
 class Block {
   PVector origin;
   ArrayList<House> houses;
@@ -48,15 +46,6 @@ class Block {
     if (sidewalk != null) {
       sidewalk.fillAll();
     }
-  }
-  
-  HashSet<Brick> getAllBricks() {
-    HashSet<Brick> bricks = new HashSet<Brick>();
-    for (House h : houses) {
-      bricks.addAll(h.getAllBricks());
-    }
-    bricks.addAll(sidewalk.bricks);
-    return bricks;
   }
   
   void fillByLayer() {

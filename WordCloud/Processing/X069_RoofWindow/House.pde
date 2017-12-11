@@ -49,15 +49,6 @@ class House {
     return h;
   }
   
-  ArrayList<Brick> getAllBricks() {
-    ArrayList<Brick> bricks = new ArrayList<Brick>();
-    for (Story s : stories) {
-      bricks.addAll(s.getAllBricks());
-      bricks.addAll(roof.bricks);
-    }
-    return bricks;
-  }
-  
   // the ratios are optimal for a 3 dinwos house
   void addStory(int hue, int window_hue) {
     
@@ -147,7 +138,7 @@ class House {
   }
   
   boolean isFilled() {
-    if (roof != null && !roof.isFilled) {
+    if (roof != null && !roof.isFilled()) {
       return false;
     } 
     for (Story s : stories) {
@@ -158,9 +149,8 @@ class House {
   }
   
   void fillByLayer() {
-    if (current_story_index == -1 && !roof.isFilled) {
-      roof.addWord();
-      roof.checkLayer();
+    if (current_story_index == -1 && !roof.isFilled()) {
+      roof.fillByLayer();
     }
     if (stories.size() > 0 && current_story_index >= 0) {
       Story cs = stories.get(current_story_index);
