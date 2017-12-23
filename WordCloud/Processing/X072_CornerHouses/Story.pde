@@ -17,7 +17,6 @@ class Story implements Fillable {
   float height;
   
   float layer_thickness;
-  int layer_index = 0;
   float gap;
   
   String type = "default";
@@ -175,7 +174,6 @@ class Story implements Fillable {
   }
    
   // TODO: split wall is actually a combination of createBase and shortenWall
-  
   void splitWall(float y) {
     createBase(y);
     shortenWall(y);

@@ -48,21 +48,6 @@ class Layer {
     return upper_bound;
   }
   
-  public Slot getSlot(float left_bound, float right_bound) {
-    for (Slot s : slots) {
-      
-      if (s.contains(left_bound) && s.contains(right_bound)) { 
-        return s;
-      }
-    }
-    return null;
-  }
-  
-  public boolean overlapsVertically(Layer other) {
-    return (this.position < other.position && this.position + thickness > other.position)
-           || (this.position < other.position+thickness && this.position + thickness > other.position+thickness);
-  }
-  
   public ArrayList<Slot> getOverlappingSlots(float left_bound, float right_bound) {
     ArrayList<Slot> overlaps = new ArrayList<Slot>();
     for (Slot s : slots) {
@@ -123,14 +108,14 @@ class Layer {
     slots.remove(current_slot);
   }
   
-  public void extendTo(float new_bound) {
-    lower_bound = min(new_bound, lower_bound);
-    upper_bound = max(new_bound, upper_bound);
-    length = upper_bound - lower_bound;
+  //public void extendTo(float new_bound) {
+  //  lower_bound = min(new_bound, lower_bound);
+  //  upper_bound = max(new_bound, upper_bound);
+  //  length = upper_bound - lower_bound;
     
-    slots = new ArrayList<Slot>();
-    slots.add(new Slot(lower_bound, upper_bound));
-  }
+  //  slots = new ArrayList<Slot>();
+  //  slots.add(new Slot(lower_bound, upper_bound));
+  //}
   
   public void extendLowerBy(float amount) {
     lower_bound -= amount;

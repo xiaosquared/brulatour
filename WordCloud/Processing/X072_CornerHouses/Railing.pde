@@ -73,15 +73,11 @@ class Railing {
   }
   
   boolean isFilled() {
-    if (top_rail.isFilled)
-      return true;
-    else return false;
+    return top_rail.isFilled;
   }
   
   boolean verticalFilled() {
-    if (rails.get(rails.size()-1).isFilled)
-      return true;
-    else return false;
+    return rails.get(rails.size()-1).isFilled;
   }
   
   void draw(boolean outline, boolean layers, boolean words) {
@@ -96,7 +92,7 @@ class Railing {
     for (Column rail : rails) {
       rail.draw();
     }
-    
     top_rail.draw();
+    bottom_rail.draw();
   }
 }
