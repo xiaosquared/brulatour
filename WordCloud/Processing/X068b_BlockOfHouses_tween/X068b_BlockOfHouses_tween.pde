@@ -48,7 +48,8 @@ Iterator<Brick> bricks;
 int words_per_frame = 10;
 
 void setup() {
-  size(1280, 800);
+  size(1280, 800, P2D);
+  smooth(4);
   textAlign(LEFT, TOP);
   colorMode(HSB, 360, 100, 100);
 

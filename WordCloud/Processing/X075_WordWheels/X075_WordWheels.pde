@@ -20,6 +20,7 @@ void setup() {
   
   w = new Wheel(100, width/2, height/2);
   w.setTurnAmount(0.05);  
+  println("go");
 }
 
 void draw() {
