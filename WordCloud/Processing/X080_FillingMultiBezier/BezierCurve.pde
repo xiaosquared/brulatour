@@ -16,7 +16,7 @@ class BezierCurve {
   public void clearLetters() { letters.clear(); }
 
   public void fillWithLetters(String phrase) {
-    float size = 16;
+    float size = 8;
     int letter_index = 0;
     
     ArrayList<BezierSegment> segments = getBezierSegments();
@@ -48,19 +48,19 @@ class BezierCurve {
         
         // this part prevents the letters from getting huge after a discontinuity
         // of angle between segments
-        float letter_size;
-        if (count > 0) {
-          float angle_diff = new_angle - angle;
-          println(angle_diff);
-          if (abs(angle_diff) > 0.25)
-            letter_size = size;
-          else { 
-            float size_diff = (new_angle-angle) * 180; // TODO adjust this factor
-            letter_size = size_diff > 0 ? size + size_diff : size - size_diff;
-          }
-        } 
-        else
-          letter_size = size;
+        //float letter_size;
+        //if (count > 0) {
+        //  float angle_diff = new_angle - angle;
+        //  println(angle_diff);
+        //  if (abs(angle_diff) > 0.25)
+        //    letter_size = size;
+        //  else { 
+        //    float size_diff = (new_angle-angle) * 180; // TODO adjust this factor
+        //    letter_size = size_diff > 0 ? size + size_diff : size - size_diff;
+        //  }
+        //} 
+        //else
+        float letter_size = size;
         
         letters.add(new BezierLetter(l, letter_size, x, y, new_angle));
         textSize(letter_size);
