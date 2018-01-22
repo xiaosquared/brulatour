@@ -22,20 +22,26 @@ public class NoteGroup {
     }
   }
 
-  //private boolean stemUp() {
-  //  return false;
-  //}
+  public void update() {
+    for (int i = 0; i < notes.length; i++) {
+      notes[i].update();
+    }
+  }
 
   public void draw(SineStaff staff) {
     float max_y = 0;
     float min_y = height;
+    int direction_count = 0;
+    
+    boolean[] notes_drawn = new boolean[notes.length];
     for (int i = 0; i < notes.length; i++) {
-      notes[i].draw(staff, -1, notes.length == 1 ? true : false);
+      notes_drawn[i] = notes[i].draw(staff, -1, notes.length == 1 ? true : false);
       float y = notes[i].position().y;
       max_y = max(max_y, y);
       min_y = min(min_y, y);
+      direction_count += notes[i].stemDirection();
     }
-
+    
     if (notes.length == 1)
       return;
 
@@ -45,18 +51,33 @@ public class NoteGroup {
     float end_x = notes[notes.length-1].position().x;
     float end_r = notes[notes.length-1].diameter/2;
 
-    PVector start = new PVector(start_x - start_r, max_y + 40);
-    PVector end = new PVector(end_x-end_r, max_y + 40);
+    float end_y = max_y+40;
+    if (staffAbove(direction_count)) {
+      end_y = min_y - 40;
+      start_r = -start_r;
+      end_r = -end_r;
+    }
+    PVector start = new PVector(start_x-start_r, end_y);
+    PVector end = new PVector(end_x-end_r,end_y);
     line(start.x, start.y, end.x, end.y);
 
-    // draw stem lines to connecting line
-    for (int i = 0; i < notes.length; i++) {
-      PVector note_position = notes[i].position();
-      float note_r = notes[i].diameter/2;
-      float x = note_position.x-note_r;
-      float y = evaluateLine(start, end, x);
-      line(x, note_position.y, x, y);
-    }
+      
+      // draw stem lines to connecting line
+      for (int i = 0; i < notes.length; i++) {
+        if (!notes_drawn[i]) 
+          return;
+        PVector note_position = notes[i].position();
+        float note_r = notes[i].diameter/2;
+        if (start_r < 0) note_r = -note_r;
+        float x = note_position.x-note_r;
+        float y = evaluateLine(start, end, x);
+        line(x, note_position.y, x, y);
+      }
+    
+  }
+
+  boolean staffAbove(int direction_count) {
+    return direction_count > 0;
   }
 
   // find y of line between p1 & P2 at x

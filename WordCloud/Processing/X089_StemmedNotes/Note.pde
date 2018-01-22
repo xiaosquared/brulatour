@@ -37,16 +37,15 @@ public class Note {
     return note.stemDirection();
   }
   
-  public void draw(SineStaff staff) {
-    draw(staff, stemDirection(), true);
+  public boolean draw(SineStaff staff) {
+    return draw(staff, stemDirection(), true);
   }
   
-  public void draw(SineStaff staff, int direction, boolean draw_stem) {
+  public boolean draw(SineStaff staff, int direction, boolean draw_stem) {
     // Draw the note
     // if not out of bounds
     int index = (int) x();
-    if (index >= staff.getNumPositions())
-      return;
+    if (index >= staff.getNumPositions()) { return false; }
     
     last_position = staff.getPosition(line, index);
     if (bAboveLine) {
@@ -55,12 +54,15 @@ public class Note {
     float x = last_position.x;
     float y = last_position.y;
     
+    index = (int) x;
+    if (index >= staff.getNumPositions()) { return false; }
+    
     diameter = staff.getLineSpacing((int)x);
     
     stroke(100); strokeWeight(2); noFill();
     ellipse(x, y, diameter * 0.85, diameter * 0.85);
     
-    if (!draw_stem) return;
+    if (!draw_stem) return true;
     
     // Draw the stem
     if (direction > 0) {
@@ -68,6 +70,7 @@ public class Note {
     } else {
       line(x - diameter* 0.85/2, y, x - diameter* 0.85/2, y + diameter * 2);
     }
+    return true;
   }   
 }
   

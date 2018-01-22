@@ -1,8 +1,10 @@
 // 01.21.18
 //
 // Stemmed Notes
-//
+// + Note Groups
 // 
+// Generates notes to span a length betweeen 100 & 300
+// If more than one note, connect the stems 
 //
 
 SineStaff staff;
