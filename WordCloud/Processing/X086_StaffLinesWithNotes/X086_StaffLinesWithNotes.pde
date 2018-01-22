@@ -3,9 +3,13 @@
 // Staff Lines with Notes
 //
 // Press any key to add a new note. Notes are from E to high G on the treble clef
+// Edited 1.21.18:
+// 
+// Added Enum for NoteType for which note it is
 //
 
 StaffLines staff;
+boolean DRAW_STEM = true;
 
 void setup() {
   size(1200, 800, P2D);
@@ -14,7 +18,7 @@ void setup() {
   background(0);
   staff.draw();
   
-  staff.addNote(1, false);
+  staff.addRandomNote();
 }
 
 void draw() {
@@ -28,7 +32,5 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  int line = floor(random(5));
-  boolean bAboveLine = floor(random(2))%2 == 0; 
-  staff.addNote(line, bAboveLine); 
+  staff.addRandomNote(); 
 }

@@ -1,11 +1,12 @@
-// 01.19.18
+// 01.21.18
 //
-// Staff Lines Words
+// Stemmed Notes
 //
-// Waving staff line made out of words!
+// 
 //
 
 SineStaff staff;
+NoteGroup ng;
 
 String phrase = "Vieux carré\nMardi Gras\nMississippi River\nLake Pontchartrain\nWar of 1812\nSt. Louis Cathedral\nCongo Square\nbamboula\nTreme\nMarigny\nlevee\nStoryville\nLouis Armstrong\nJelly-Roll Morton\nCreole\nBayou St. John\nJean Lafitte\nFrench Market\nUptown\nhurricane";
 String[] words = new String[20];
@@ -18,10 +19,13 @@ void setup() {
   
   initWords();
   
-  staff = new SineStaff(new PVector(50, height/2), width - 100, 100);
+  staff = new SineStaff(new PVector(50, height*2/3), width - 100, 120, -PI/15);
   staff.initText(words, font_size);
   staff.update();
   staff.draw();
+  
+  ng = new NoteGroup(200, 300);
+  staff.addNoteGroup(ng);
 }
 
 void draw() {
@@ -41,6 +45,8 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  println("keypressed");
-  background(0);
+  //staff.addRandomNote();
+  ng = new NoteGroup(random(100, 300), 0);
+  staff.note_groups.clear();
+  staff.addNoteGroup(ng);
 }

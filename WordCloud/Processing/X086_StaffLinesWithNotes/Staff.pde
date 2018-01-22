@@ -48,8 +48,8 @@ public class StaffLines {
     notes = new ArrayList<Note>();  
   }
   
-  Note addNote(int line, boolean bAboveLine) {
-    Note n = new Note(line, bAboveLine, origin.x);
+  Note addRandomNote() {
+    Note n = new Note(NoteName.getRandomNote(), origin.x);
     notes.add(n);
     return n;
   }
@@ -101,6 +101,7 @@ public class StaffLines {
       float bw = 20 + taper * 180;
       fill(bw);
       stroke(bw);
+      strokeWeight(1);
       
       // get the staff positions
       for (int index = 0; index < 5; index++) { 
@@ -113,7 +114,7 @@ public class StaffLines {
       // draw notes
       for (Note note : notes) {
         if (i == note.x()) {
-          float note_diameter = (y - (5 * y_offset)*taper) - (y - (4 * y_offset)*taper);
+          float note_diameter = abs((y - (5 * y_offset)*taper) - (y - (4 * y_offset)*taper));
           noStroke();
           note.draw(this, note_diameter);
         }
