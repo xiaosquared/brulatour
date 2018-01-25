@@ -3,9 +3,12 @@ class BPoint {
   boolean isAnchor;
   boolean isSelected = false;
     
-  public BPoint(float x, float y, boolean isAnchor) {
-    pt = new PVector(x, y);
+  public BPoint(PVector pt, boolean isAnchor) {
+    this.pt = pt;
     this.isAnchor = isAnchor;
+  }
+  public BPoint(float x, float y, boolean isAnchor) {
+    this(new PVector(x, y), isAnchor);
   }
  
   public float x() { return pt.x; }
@@ -14,7 +17,7 @@ class BPoint {
   public void setX(float x) { pt.x = x; }
   public void setY(float y) { pt.y = y; }
   public void setSelected(boolean s) { isSelected = s; }
-    
+  
   public void draw() {
     if (isSelected)
       strokeWeight(3);

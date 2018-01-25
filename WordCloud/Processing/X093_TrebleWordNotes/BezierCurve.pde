@@ -15,6 +15,33 @@ class BezierCurve {
     letters = new ArrayList<BezierLetter>();
   }
 
+  public BezierCurve(BPoint a0) {
+    points = new ArrayList<BPoint>();
+    points.add(a0);
+    letters = new ArrayList<BezierLetter>();
+  }
+
+  public BezierCurve(ArrayList<BPoint> points) {
+    this.points = points;
+    letters = new ArrayList<BezierLetter>();
+  }
+
+  public void scale(float factor) {
+    for (BPoint pt : points) {
+      pt.setX(pt.x() * factor);
+      pt.setY(pt.y() * factor);
+    }
+  }
+
+  public void zeroOrigin() {
+    float origin_x = points.get(0).x();
+    float origin_y = points.get(0).y();
+    for (BPoint pt : points) {
+      pt.setX(pt.x() - origin_x);
+      pt.setY(pt.y() - origin_y);
+    }
+  }
+
   public void clearLetters() { letters.clear(); }
 
   public void setLettersVisibility(boolean b) {
@@ -33,8 +60,10 @@ class BezierCurve {
    return false;
   }
 
-  public void fillWithLetters(String phrase) {
-    float size = 16;
+  public void fillWithLetters(String phrase) { fillWithLetters(phrase, 16); }
+
+  public void fillWithLetters(String phrase, float font_size) {
+    float size = font_size;
     int letter_index = 0;
     
     ArrayList<BezierSegment> segments = getBezierSegments();
@@ -73,7 +102,7 @@ class BezierCurve {
           if (abs(angle_diff) > 0.15)
             letter_size = size;
           else { 
-            float size_diff = (new_angle-angle) * 180; // TODO adjust this factor
+            float size_diff = (new_angle-angle) * 50; // TODO adjust this factor
             letter_size = size_diff > 0 ? size + size_diff : size - size_diff;
           }
         } 
@@ -81,7 +110,7 @@ class BezierCurve {
           letter_size = size;
         
         letters.add(new BezierLetter(l, letter_size, x, y, new_angle));
-        textSize(letter_size);
+        //textSize(letter_size);
         
       
         current_length += textWidth(l) * 1.1;
