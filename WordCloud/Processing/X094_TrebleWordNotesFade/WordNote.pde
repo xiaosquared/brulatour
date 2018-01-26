@@ -15,8 +15,13 @@ class WordNote {
     notes.update();
   }
   
+  public void fade() {
+    Ani.to(this, 5, "opacity", 0);
+  }
+  
   public void draw(SineStaff staff) {
-    notes.draw(staff, false, true);
+
+    notes.draw(staff, false, true, opacity);
     
     PVector text_origin = notes.connectorStart();
     fill(230, opacity);
