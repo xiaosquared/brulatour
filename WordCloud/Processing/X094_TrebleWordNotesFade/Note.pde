@@ -61,30 +61,33 @@ public class Note {
     }
     float y = last_position.y;
     
+    stroke(200, opacity);
     
-    //stroke(100, opacity); strokeWeight(2); //noFill();
-    
-    stroke(100, opacity);
-    
-    if (isFilled) { fill(150, opacity); }
+    if (isFilled) { fill(250, opacity); }
     else { noFill(); }
     
     textSize(6);
     drawTextCircle(x, y, diameter * 0.85/2, 'x');
+    drawTextSpiral(x, y, diameter * 0.85/2, 'x');
     
     noStroke();
-    ellipse(x, y, diameter * 0.85, diameter * 0.85);
+    //ellipse(x, y, diameter * 0.85, diameter * 0.85);
     
     if (!draw_stem) return true;
     
     // Draw the stem
-    if (direction > 0) {
+    drawStem(x, y, direction > 0);
+    
+    return true;
+  }   
+  
+  private void drawStem(float x, float y, boolean dir) {
+    if (dir) {
       line(x + diameter* 0.85/2, y, x + diameter* 0.85/2, y - diameter * 2);
     } else {
       line(x - diameter* 0.85/2, y, x - diameter* 0.85/2, y + diameter * 2);
     }
-    return true;
-  }   
+  }
   
   private void drawTextCircle(float x, float y, float radius, char letter) {
     float letter_angle = 0;
@@ -101,6 +104,22 @@ public class Note {
       
       letter_angle += letter_width/radius;
     }
+  }
+  
+  private void drawTextSpiral(float x, float y, float radius, char letter) {
+    textSize(4);
+    float r = textWidth(letter);
+    float arclen = textWidth(letter);
+    pushMatrix();
+    translate(x, y);
+    while (r <= radius) {
+      r += 0.2;
+      
+      float theta = arclen/r;
+      rotate(theta);
+      text(letter, 0, r);
+    }
+    popMatrix();
   }
   
 }

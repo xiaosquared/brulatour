@@ -5,7 +5,7 @@ public class NoteGroup {
   float width;
   float in_between;
   float start_x;
-  boolean stemUp = false;
+  boolean staffAbove = false;
 
   PVector connector_start = new PVector(0, 0);
 
@@ -120,6 +120,8 @@ public class NoteGroup {
   }
 
   private void drawTextStems(float x, float start_y, float end_y, boolean staff_above, char letter) {
+    textSize(6);
+  
     float stem_len = abs(start_y - end_y);
     float letter_width = textWidth(letter);
     float filled_len = staff_above ? letter_width : letter_width + 20;

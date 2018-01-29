@@ -16,16 +16,16 @@ PFont font;
 
 float current_time;
 float last_change_time = 0;
-float CHANGE = 200;
+float CHANGE = 1000;
 
 void setup() {
-  size(1400, 800, P2D);
-  //fullScreen(P2D);
+  //size(1400, 800, P2D);
+  fullScreen(P2D);
   background(0);
 
   initWords();
   
-  staff = new SineStaff(new PVector(0, height*2/3), width - 100, 120, -PI/15);
+  staff = new SineStaff(new PVector(0, height*0.4), width - 100, 120, -PI/15);
   staff.initText(words, font_size);
   
   //staff.fillWithWordNotes(300, 40);

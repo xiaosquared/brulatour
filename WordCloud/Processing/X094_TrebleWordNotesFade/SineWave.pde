@@ -95,10 +95,10 @@ class SineWave {
     if (drawLine) {
       for (int i = 0; i < positions.length; i++) {
         if (i <= taper_width) {
-          float shade = (float) i/taper_width * 200;
+          float shade = (float) i/taper_width * 250;
           stroke(shade); fill(shade);
         } else {
-          stroke(200); fill(200);
+          stroke(250); fill(250);
         }
         PVector p = positions[i];
         ellipse(p.x, p.y, 1, 1);

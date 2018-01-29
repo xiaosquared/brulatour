@@ -16,7 +16,7 @@ class WordNote {
   }
   
   public void fade() {
-    Ani.to(this, 5, "opacity", 0);
+    Ani.to(this, 7, "opacity", 0);
   }
   
   public void draw(SineStaff staff) {

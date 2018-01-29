@@ -51,7 +51,6 @@ class SineStaff {
     word_notes.clear();
     word_start_x = taper_width;
     word_end_x = width;
-    println(word_notes.size());
   }
 
   public void removeFirstWordNote() {
