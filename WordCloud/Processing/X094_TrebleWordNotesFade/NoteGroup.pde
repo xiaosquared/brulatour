@@ -5,7 +5,7 @@ public class NoteGroup {
   float width;
   float in_between;
   float start_x;
-  boolean staffAbove = false;
+  boolean staffAbove = false; // stemUp
 
   PVector connector_start = new PVector(0, 0);
 
@@ -89,7 +89,6 @@ public class NoteGroup {
 
     float end_y = max_y+60;
 
-    boolean staffAbove = false;
     if (direction_count < 0 ) { //|| (direction_count == 0 && random(2) <= 1)) {
       end_y = min_y - 60;
       start_r = -start_r;
@@ -124,7 +123,7 @@ public class NoteGroup {
   
     float stem_len = abs(start_y - end_y);
     float letter_width = textWidth(letter);
-    float filled_len = staff_above ? letter_width : letter_width + 20;
+    float filled_len = letter_width + 20; //staff_above ? letter_width : letter_width + 20;
     pushMatrix();
     translate(x, start_y);
     rotate(-PI/2);

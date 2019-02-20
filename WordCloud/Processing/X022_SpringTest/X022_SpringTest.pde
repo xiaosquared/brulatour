@@ -24,11 +24,6 @@ void draw() {
     p.update();
 }
 
-void mousePressed() {
-  println(mouseX + ", " + mouseY);
-  p.pos.y += random(-20, 20); 
-}
-
 void mouseDragged() {
   if (p.insideParticle(mouseX, mouseY)) {
     doUpdate = false;

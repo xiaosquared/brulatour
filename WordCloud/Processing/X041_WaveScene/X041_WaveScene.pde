@@ -30,7 +30,7 @@ int lastRainTime = 0;
 
 void setup() {
   fullScreen(P2D);
-  background(30);
+  background(0);
   
   initWords();
   Ani.init(this);
@@ -45,7 +45,7 @@ void setup() {
 }
 
 void draw() {
-  background(30);
+  background(0);
   
   if (fwt != null) {
     if (fwt.opacity == 0)

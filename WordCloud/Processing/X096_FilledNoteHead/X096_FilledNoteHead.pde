@@ -4,6 +4,7 @@
 //
 // For light up notes
 // Filling the note head with a spiral
+// Already integrated into X094
 
 float MAX_RADIUS = 10;
 
@@ -12,7 +13,6 @@ void setup() {
   
   background(0);
   stroke(250);
-
 }
 
 void draw() {

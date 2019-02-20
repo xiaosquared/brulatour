@@ -21,6 +21,11 @@ class Particle {
     pos.add(vel);
   }
 
+  void lift(float amount) {
+    pos.add(0, -amount);
+    pos.y = max(pos.y, 0);
+  }
+
   void draw() {
     ellipse(pos.x, pos.y, rad*2, rad*2);
   }

@@ -28,7 +28,8 @@ class WordNote {
     textSize(font_size);
     
     pushMatrix();
-    translate(text_origin.x, text_origin.y);
+    float y_adjust = notes.staffAbove ? 0 : 10;
+    translate(text_origin.x, text_origin.y + y_adjust);
     //rotate(random(-PI/6, PI/6));
     //rotate(notes.getFirstLastAngle());
     text(text, 0, 0);

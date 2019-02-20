@@ -61,13 +61,13 @@ public class Note {
     }
     float y = last_position.y;
     
-    stroke(200, opacity);
+    stroke(250, opacity);
     
     if (isFilled) { fill(250, opacity); }
     else { noFill(); }
     
     textSize(6);
-    drawTextCircle(x, y, diameter * 0.85/2, 'x');
+    //drawTextCircle(x, y, diameter * 0.85/2, 'x');
     drawTextSpiral(x, y, diameter * 0.85/2, 'x');
     
     noStroke();
@@ -107,12 +107,12 @@ public class Note {
   }
   
   private void drawTextSpiral(float x, float y, float radius, char letter) {
-    textSize(4);
-    float r = textWidth(letter);
+    textSize(10);
+    float r = 0;//textWidth(letter);
     float arclen = textWidth(letter);
     pushMatrix();
     translate(x, y);
-    while (r <= radius) {
+    while (r <= radius*1.2) {
       r += 0.2;
       
       float theta = arclen/r;

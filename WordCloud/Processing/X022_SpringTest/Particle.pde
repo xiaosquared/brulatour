@@ -15,10 +15,10 @@ class Particle {
   }
 
   void update() {
-    float dist_y = TARGET_HEIGHT - getSpringHeight();
+    float dist_y = TARGET_HEIGHT - (height - pos.y); 
     acc.y = (-K * dist_y) - (DAMPING * vel.y);
     
-    pos.add(vel);
+    pos.add(vel);  
     vel.add(acc);
   }
   
@@ -32,7 +32,7 @@ class Particle {
   }
   
   // helper functions
-  float getSpringHeight() {
-    return (float) height - pos.y;
-  }
+  //float getSpringHeight() {
+  //  return (float) height - pos.y;
+  //}
 }

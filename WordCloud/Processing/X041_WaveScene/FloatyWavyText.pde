@@ -75,7 +75,7 @@ class FloatyWavyText extends WavyText {
   }
   
   void draw() {
-    fill(200);
+    fill(250);
     textSize(font_size);
     if (inWater) {
       drawWavyText(target_wave.springs, target_wave.radius *2);
